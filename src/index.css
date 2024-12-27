@@ -1,5 +1,29 @@
-/* Including tailwind css  */
+.PhoneInputInput {
+  outline: none !important;
+}
 
+@font-face {
+  font-family: "Givonic";
+  src: url("./assets/fonts/Givonic-Regular.ttf") format("ttf");
+  font-weight: 400; /* Regular */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Givonic";
+  src: url("./assets/fonts/Givonic-SemiBold.ttf") format("ttf");
+  font-weight: 600; /* Semi-Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Givonic";
+  src: url("./assets/fonts/Givonic-Bold.ttf") format("ttf");
+  font-weight: 700; /* Bold */
+  font-style: normal;
+}
+
+/* Tailwind CSS imports */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
