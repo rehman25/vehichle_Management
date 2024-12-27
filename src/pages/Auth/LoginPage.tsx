@@ -1,4 +1,3 @@
-import React from "react";
 import logo from "./assets/signin_logo.svg";
 
 const LoginPage = () => {
