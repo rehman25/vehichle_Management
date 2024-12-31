@@ -97,7 +97,10 @@ const SIgnUpPage = () => {
           </div>
         </div>
 
-        <button className="w-[185px] mt-6 h-[45px] border-[1px] rounded-[10px] border-supporting_blue text-secondary font-givonic-semibold">
+        <button
+          onClick={() => navigate("/dashboard")}
+          className="w-[185px] mt-6 h-[45px] border-[1px] rounded-[10px] border-supporting_blue text-secondary font-givonic-semibold"
+        >
           Proceed
         </button>
       </div>
