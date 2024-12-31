@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "react-phone-number-input/style.css";
+import { useNavigate } from "react-router-dom";
 
 const OtpPage = () => {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
-
+  const navigate = useNavigate();
   const handleChange = (value: string, index: number): void => {
     const newOtp = [...otp];
     newOtp[index] = value.slice(-1);
@@ -60,7 +61,10 @@ const OtpPage = () => {
         </div>
 
         <div className="mt-12">
-          <button className="w-[185px] h-[45px] border-[1px] rounded-[10px] border-supporting_blue text-secondary text-[18px] font-givonic-semibold">
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="w-[185px] h-[45px] border-[1px] rounded-[10px] border-supporting_blue text-secondary text-[18px] font-givonic-semibold"
+          >
             Verify Now!
           </button>
         </div>
