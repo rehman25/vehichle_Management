@@ -6,6 +6,7 @@ import SIgnUpPage from "./pages/Auth/SIgnUpPage";
 import VerificationPage from "./pages/Auth/VerificationPage";
 import OtpPage from "./pages/Auth/OtpPage";
 import HomePage from "./pages/HomePage";
+import ServicesPage from "./pages/ServicesPage";
 
 type AppProps = {};
 const App: React.FC<AppProps> = () => {
@@ -18,6 +19,7 @@ const App: React.FC<AppProps> = () => {
         <Route path="/verify" element={<VerificationPage />} />
         <Route path="/otp" element={<OtpPage />} />
         <Route path="/dashboard" element={<HomePage />} />
+        <Route path="/services" element={<ServicesPage />} />
       </Routes>
     </Router>
   );

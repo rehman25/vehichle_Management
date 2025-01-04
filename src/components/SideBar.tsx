@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/images/sidebar-logo.svg";
 import closeIcon from "../assets/images/close-icon.svg";
 import dashboardSvg from "../assets/images/dashboard-icon.svg";
@@ -13,18 +13,24 @@ import inventorySvg from "../assets/images/inventory-icon.svg";
 import reportsSvg from "../assets/images/reports-icon.svg";
 import logoutSvg from "../assets/images/logout-icon.svg";
 import downArrow from "../assets/images/dropdown-icon.svg";
+import { useLocation, useNavigate } from "react-router-dom";
 
-type SideBarProps = {};
-const SideBar: React.FC<SideBarProps> = () => {
+type SideBarProps = {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+};
+const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
   const [activeMenu, setActiveMenu] = useState<number>(0);
-
-  const handleActive = (index: number) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const handleActive = (index: number, route: string) => {
     setActiveMenu(index);
+    navigate(route);
   };
 
   const menuItems = [
-    { name: "Dashboard", icon: dashboardSvg, route: "" },
-    { name: "Services", icon: servicesSvg, route: "" },
+    { name: "Dashboard", icon: dashboardSvg, route: "/dashboard" },
+    { name: "Services", icon: servicesSvg, route: "/services" },
     { name: "Customers", icon: customerSvg, route: "" },
     { name: "Items", icon: itemsSvg, route: "" },
     { name: "Sales", icon: salesSvg, route: "" },
@@ -35,41 +41,61 @@ const SideBar: React.FC<SideBarProps> = () => {
     { name: "Reports", icon: reportsSvg, route: "", isDropDown: true },
     { name: "Logout", icon: logoutSvg, route: "" },
   ];
+
+  useEffect(() => {
+    const activeRoute = menuItems.findIndex(
+      (item) => item.route === location.pathname
+    );
+    setActiveMenu(activeRoute !== -1 ? activeRoute : 0);
+  }, [location]);
+
   return (
-    <div className="w-[28%]">
-      <div className="flex items-center justify-between mt-10 px-10">
-        <div className="cursor-pointer">
+    <div
+      className={`transition-all duration-300 ease-in-out transform ${
+        isOpen ? "translate-x-0 w-[26%]" : "-translate-x-full w-[0%]"
+      }`}
+    >
+      <div className="flex items-center justify-between px-10">
+        <div onClick={()=>navigate("/dashboard")} className="cursor-pointer">
           <img className="" src={logo} alt="app-logo" />
         </div>
-        <div className="cursor-pointer">
+        <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
           <img src={closeIcon} alt="closeIcon" />
         </div>
       </div>
 
       <div className="mt-5">
-        {menuItems.map((item, index) => (
-          <div
-            onClick={() => handleActive(index)}
-            key={index}
-            className={`cursor-pointer flex items-center justify-start px-10 py-3 ${
-              activeMenu === index ? "bg-secondary" : "bg-transparent"
-            }`}
-          >
-            <img src={item.icon} alt={`${item.name}-icon`} />
-            <span
-              className={`mx-5 text-[18px] ${
-                activeMenu === index ? "text-[#ffffff]" : "text-[#000000]"
+        {isOpen &&
+          menuItems.map((item, index) => (
+            <div
+              onClick={() => handleActive(index, item.route)}
+              key={index}
+              className={`cursor-pointer flex items-center justify-start px-10 py-3 ${
+                activeMenu === index ? "bg-secondary" : "bg-transparent"
               }`}
             >
-              {item.name}
-            </span>
-            {item.isDropDown && (
-              <div>
-                <img src={downArrow} alt={`downArrow`} />
+              <div
+                className={`transition-all ${
+                  activeMenu === index ? "filter invert hue-rotate-90" : ""
+                }`}
+              >
+                <img src={item.icon} alt={`${item.name}-icon`} />
               </div>
-            )}
-          </div>
-        ))}
+
+              <span
+                className={`mx-5 text-[18px] ${
+                  activeMenu === index ? "text-[#ffffff]" : "text-[#000000]"
+                }`}
+              >
+                {item.name}
+              </span>
+              {item.isDropDown && (
+                <div>
+                  <img src={downArrow} alt={`downArrow`} />
+                </div>
+              )}
+            </div>
+          ))}
       </div>
     </div>
   );
