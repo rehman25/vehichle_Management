@@ -5,6 +5,9 @@ import { useState } from "react";
 import arrowIcon from "../assets/images/arrow-icon.svg";
 import saveIcon from "../assets/images/save-btn.svg";
 import paidIcon from "../assets/images/saveandpaid.svg";
+import addIcon from "../assets/images/add-icon.svg";
+import Dropdown from "../components/Dropdown";
+import Input from "../components/Input";
 
 const ServicesPage = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -19,8 +22,70 @@ const ServicesPage = () => {
     "Discount",
     "Created On",
     "Payment Type",
-    "Actions",
   ];
+  const tableData = [
+    {
+      "Customer Name": "John Doe",
+      "Service On": "2025-01-01",
+      Readings: "15,000",
+      "Due KMs": "5,000",
+      "Vehicle No": "AB-1234",
+      "Total Price": "$500",
+      "Paid Amount": "$400",
+      Discount: "$50",
+      "Created On": "2025-01-01",
+      "Payment Type": "Cash",
+    },
+    {
+      "Customer Name": "Jane Smith",
+      "Service On": "2025-01-02",
+      Readings: "20,000",
+      "Due KMs": "7,500",
+      "Vehicle No": "XY-5678",
+      "Total Price": "$600",
+      "Paid Amount": "$500",
+      Discount: "$100",
+      "Created On": "2025-01-02",
+      "Payment Type": "Card",
+    },
+    {
+      "Customer Name": "Michael Brown",
+      "Service On": "2025-01-03",
+      Readings: "25,000",
+      "Due KMs": "10,000",
+      "Vehicle No": "CD-9012",
+      "Total Price": "$700",
+      "Paid Amount": "$600",
+      Discount: "$50",
+      "Created On": "2025-01-03",
+      "Payment Type": "UPI",
+    },
+    {
+      "Customer Name": "Emily Davis",
+      "Service On": "2025-01-04",
+      Readings: "12,000",
+      "Due KMs": "3,000",
+      "Vehicle No": "EF-3456",
+      "Total Price": "$400",
+      "Paid Amount": "$300",
+      Discount: "$50",
+      "Created On": "2025-01-04",
+      "Payment Type": "Cash",
+    },
+    {
+      "Customer Name": "Chris Evans",
+      "Service On": "2025-01-05",
+      Readings: "30,000",
+      "Due KMs": "12,000",
+      "Vehicle No": "GH-7890",
+      "Total Price": "$800",
+      "Paid Amount": "$700",
+      Discount: "$100",
+      "Created On": "2025-01-05",
+      "Payment Type": "Net Banking",
+    },
+  ];
+  
 
   return (
     <Layout>
@@ -50,52 +115,101 @@ const ServicesPage = () => {
           </div>
 
           {/* ---form fields--- */}
-          <div className="max-w-6xl mx-auto p-12 bg-white border rounded-lg shadow-lg mt-5">
+          <div className="p-12 bg-white border rounded-lg shadow-lg mt-5">
             <div className="flex items-center gap-x-4">
-              <p className="text-[16px] text-supporting_gray w-32 flex-shrink-0">
+              <p className="text-[16px] font-bold text-supporting_gray w-32 flex-shrink-0">
                 Customer
               </p>
 
-              <div className="flex-1 p-3 border text-[16px] text-[#424242] border-supporting_blue ">
-                <select className="w-full outline-none ">
-                  <option value="" disabled selected>
-                    ...Select...
-                  </option>
-                  <option>Option 1</option>
-                  <option>Option 2</option>
-                </select>
+              <Dropdown
+                label="Select Customer"
+                options={["Option 4", "Option 2"]}
+              />
+            </div>
+
+            <div className="flex mt-5 gap-x-4">
+              <div className="flex items-center gap-x-4 flex-1">
+                <p className="text-[16px]  font-bold text-supporting_gray w-32 flex-shrink-0">
+                  Vehicle
+                </p>
+                <Dropdown
+                  label="Select Vehicle"
+                  options={["Option 4", "Option 2"]}
+                />
+              </div>
+
+              <div className="flex items-center gap-x-4 flex-1">
+                <p className="text-[16px]  font-bold text-supporting_gray w-32 flex-shrink-0 pl-4">
+                  Reading
+                </p>
+                <Dropdown
+                  label="Select Reading"
+                  options={["Option 4", "Option 2"]}
+                />
               </div>
             </div>
 
             <div className="flex mt-5 gap-x-4">
               <div className="flex items-center gap-x-4 flex-1">
-                <p className="text-[16px] text-supporting_gray w-32 flex-shrink-0">
-                  Vehicle
+                <p className="text-[16px]  font-bold text-supporting_gray w-32 flex-shrink-0">
+                  Date
                 </p>
-                <div className="flex-1 p-3 border text-[16px] text-[#424242] border-supporting_blue ">
-                  <select className="w-full outline-none ">
-                    <option value="" disabled selected>
-                      ...Select...
-                    </option>
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                  </select>
-                </div>
+                <Input value={"12/11/2024"} />
               </div>
 
               <div className="flex items-center gap-x-4 flex-1">
-                <p className="text-[16px] text-supporting_gray w-32 flex-shrink-0 pl-4">
-                  Reading
+                <p className="text-[16px]  font-bold text-supporting_gray w-32 flex-shrink-0 pl-4">
+                  Due KMs
                 </p>
-                <div className="flex-1 p-3 border text-[16px] text-[#424242] border-supporting_blue ">
-                  <select className="w-full outline-none ">
-                    <option value="" disabled selected>
-                      ...Select...
-                    </option>
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                  </select>
-                </div>
+                <Dropdown
+                  label="Select Reading"
+                  options={["Option 4", "Option 2"]}
+                />
+              </div>
+            </div>
+
+            <div className="flex mt-5 gap-x-4">
+              <div className="flex items-center gap-x-4 flex-1">
+                <p className="text-[16px]  font-bold text-supporting_gray w-32 flex-shrink-0">
+                  Paid Amount
+                </p>
+                <Dropdown
+                  label="Select Vehicle"
+                  options={["Option 4", "Option 2"]}
+                />
+              </div>
+
+              <div className="flex items-center gap-x-4 flex-1">
+                <p className="text-[16px]  font-bold text-supporting_gray w-32 flex-shrink-0 pl-4">
+                  Payment Type
+                </p>
+                <Dropdown
+                  label="Select Reading"
+                  options={["Option 4", "Option 2"]}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-end mt-5">
+            <button className="flex items-center gap-4 bg-supporting_blue rounded-[10px] py-3 px-4 cursor-pointer">
+              <img src={addIcon} alt="add-Icon" />
+              <span className="text-[16px] text-white">Add Service</span>
+            </button>
+          </div>
+
+          <div className="flex items-center justify-end mt-5">
+            <div className="p-12 bg-white border rounded-lg w-[40%] space-y-4 shadow-lg mt-5">
+              <div className="flex items-center gap-x-4 flex-1">
+                <p className="text-[16px]  font-bold text-supporting_gray w-32 flex-shrink-0">
+                  Total
+                </p>
+                <Input value={"0"} />
+              </div>
+              <div className="flex items-center gap-x-4 flex-1">
+                <p className="text-[16px]  font-bold text-supporting_gray w-32 flex-shrink-0">
+                  Discount
+                </p>
+                <Input value={"0"} />
               </div>
             </div>
           </div>
@@ -106,7 +220,7 @@ const ServicesPage = () => {
             titleName={"Services"}
             onAddNew={() => setShowForm(true)}
           />
-          <UniversalTable headers={tableHeaders} />
+          <UniversalTable headers={tableHeaders} data={tableData} />
         </div>
       )}
     </Layout>

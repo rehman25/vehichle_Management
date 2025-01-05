@@ -31,8 +31,8 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
   const menuItems = [
     { name: "Dashboard", icon: dashboardSvg, route: "/dashboard" },
     { name: "Services", icon: servicesSvg, route: "/services" },
-    { name: "Customers", icon: customerSvg, route: "" },
-    { name: "Items", icon: itemsSvg, route: "" },
+    { name: "Customers", icon: customerSvg, route: "/customers" },
+    { name: "Items", icon: itemsSvg, route: "/items" },
     { name: "Sales", icon: salesSvg, route: "" },
     { name: "Expenses", icon: expenseSvg, route: "", isDropDown: true },
     { name: "Petty Cash", icon: cashSvg, route: "" },
@@ -52,7 +52,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
   return (
     <div
       className={`transition-all duration-300 ease-in-out transform ${
-        isOpen ? "translate-x-0 w-[26%]" : "-translate-x-full w-[0%]"
+        isOpen ? "translate-x-0 w-[20%]" : "-translate-x-full w-[0%]"
       }`}
     >
       <div className="flex items-center justify-between px-10">

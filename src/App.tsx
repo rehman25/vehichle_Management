@@ -7,6 +7,8 @@ import VerificationPage from "./pages/Auth/VerificationPage";
 import OtpPage from "./pages/Auth/OtpPage";
 import HomePage from "./pages/HomePage";
 import ServicesPage from "./pages/ServicesPage";
+import CustomersPage from "./pages/CustomersPage";
+import ItemsPage from "./pages/ItemsPage";
 
 type AppProps = {};
 const App: React.FC<AppProps> = () => {
@@ -20,6 +22,8 @@ const App: React.FC<AppProps> = () => {
         <Route path="/otp" element={<OtpPage />} />
         <Route path="/dashboard" element={<HomePage />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/customers" element={<CustomersPage />} />
+        <Route path="/items" element={<ItemsPage />} />
       </Routes>
     </Router>
   );
