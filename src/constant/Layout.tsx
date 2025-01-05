@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="flex pt-10">
       <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className={` ${isOpen ? "w-[74%]" : "w-full"}`}>{children}</div>
+      <div className={` ${isOpen ? "w-[80%]" : "w-full"}`}>{children}</div>
     </div>
   );
 };
