@@ -1,10 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import loginLogo from "../../assets/images/login-logo.svg";
+import loginBg from "../../assets/images/Sign-In.jpg";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-cover bg-center bg-login-bg w-full flex flex-col justify-center items-center">
+    <div
+      style={{
+        backgroundImage: `url(${loginBg})`,
+      }}
+      className="min-h-screen bg-cover bg-center w-full flex flex-col justify-center items-center"
+    >
       <div className="container flex justify-end">
         <div className="w-[50%] bg-black/85 p-5 rounded-[20px]">
           <h1 className="text-[36px] text-secondary font-givonic-bold">
