@@ -51,9 +51,9 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
 
   return (
     <div
-      className={`transition-all duration-300 ease-in-out transform ${
-        isOpen ? "translate-x-0 w-[20%]" : "-translate-x-full w-[0%]"
-      }`}
+    className={`fixed top-0 left-0 h-full  transition-all duration-300 ${
+      isOpen ? "w-[18%]" : "w-0"
+    } overflow-y-auto`}
     >
       <div className="flex items-center justify-between px-10">
         <div onClick={()=>navigate("/dashboard")} className="cursor-pointer">

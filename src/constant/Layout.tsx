@@ -9,9 +9,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   return (
-    <div className="flex pt-10">
+    <div className="flex h-screen">
       <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className={` ${isOpen ? "w-[80%]" : "w-full"}`}>{children}</div>
+      <div
+        className={`transition-all duration-300 ${
+          isOpen ? "ml-[18%]" : "ml-0"
+        } flex-1 p-10 overflow-auto`}
+      >
+        {children}
+      </div>
     </div>
   );
 };
