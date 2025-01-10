@@ -6,9 +6,11 @@ import arrowIcon from "../assets/images/arrow-icon.svg";
 import saveIcon from "../assets/images/save-btn.svg";
 import addIcon from "../assets/images/add-icon.svg";
 import Input from "../components/Input";
+import Pagination from "../components/Pagination";
 
 const ItemsPage = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const headers = [
     "Item Type",
     "Name",
@@ -158,6 +160,13 @@ const ItemsPage = () => {
             onAddNew={() => setShowForm(true)}
           />
           <UniversalTable headers={headers} data={data} />
+
+          <Pagination
+            totalItems={100}
+            itemsPerPage={10}
+            currentPage={currentPage}
+            onPageChange={(page: number) => setCurrentPage(page)}
+          />
         </div>
       )}
     </Layout>

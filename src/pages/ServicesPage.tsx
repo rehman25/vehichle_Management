@@ -8,9 +8,11 @@ import paidIcon from "../assets/images/saveandpaid.svg";
 import addIcon from "../assets/images/add-icon.svg";
 import Dropdown from "../components/Dropdown";
 import Input from "../components/Input";
+import Pagination from "../components/Pagination";
 
 const ServicesPage = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const tableHeaders = [
     "Customer Name",
     "Service On",
@@ -85,7 +87,6 @@ const ServicesPage = () => {
       "Payment Type": "Net Banking",
     },
   ];
-  
 
   return (
     <Layout>
@@ -221,6 +222,13 @@ const ServicesPage = () => {
             onAddNew={() => setShowForm(true)}
           />
           <UniversalTable headers={tableHeaders} data={tableData} />
+
+          <Pagination
+            totalItems={100}
+            itemsPerPage={10}
+            currentPage={currentPage}
+            onPageChange={(page: number) => setCurrentPage(page)}
+          />
         </div>
       )}
     </Layout>

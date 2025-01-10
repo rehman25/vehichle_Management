@@ -33,7 +33,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
     { name: "Services", icon: servicesSvg, route: "/services" },
     { name: "Customers", icon: customerSvg, route: "/customers" },
     { name: "Items", icon: itemsSvg, route: "/items" },
-    { name: "Sales", icon: salesSvg, route: "" },
+    { name: "Sales", icon: salesSvg, route: "/sales" },
     { name: "Expenses", icon: expenseSvg, route: "", isDropDown: true },
     { name: "Petty Cash", icon: cashSvg, route: "" },
     { name: "Message Centre", icon: messageSvg, route: "" },
@@ -51,12 +51,12 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
 
   return (
     <div
-    className={`fixed top-0 left-0 h-full  transition-all duration-300 ${
-      isOpen ? "w-[18%]" : "w-0"
-    } overflow-y-auto`}
+      className={`fixed top-0 left-0 h-full  transition-all duration-300 ${
+        isOpen ? "w-[18%]" : "w-0"
+      } overflow-y-auto`}
     >
-      <div className="flex items-center justify-between px-10">
-        <div onClick={()=>navigate("/dashboard")} className="cursor-pointer">
+      <div className="flex items-center justify-between px-6">
+        <div onClick={() => navigate("/dashboard")} className="cursor-pointer">
           <img className="" src={logo} alt="app-logo" />
         </div>
         <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">

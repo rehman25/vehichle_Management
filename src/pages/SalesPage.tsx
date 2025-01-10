@@ -7,46 +7,66 @@ import saveIcon from "../assets/images/save-btn.svg";
 import addIcon from "../assets/images/add-icon.svg";
 import Input from "../components/Input";
 import Pagination from "../components/Pagination";
+import Dropdown from "../components/Dropdown";
 
-const CustomersPage = () => {
+const SalesPage = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const headers = [
-    "Name",
+    "Order Number",
+    "Customer",
     "Date",
-    "Salary",
-    "Bonus",
-    "ID",
-    "Total",
-    "Remaining",
+    "Created On",
+    "Amount",
     "Paid",
-    "Due Date",
-    "Payment Method",
+    "Discount",
   ];
+
   const data = [
     {
-      Name: "John Doe",
-      Date: "Jan, 01",
-      Salary: "125,000",
-      Bonus: "10,000",
-      ID: "1234",
-      Total: "$500",
-      Remaining: "$400",
-      Paid: "$100",
-      "Due Date": "25, May",
-      "Payment Method": "Cash",
+      "Order Number": "001",
+      Customer: "John Doe",
+      Date: "2025-01-01",
+      "Created On": "2025-01-01",
+      Amount: "$250",
+      Paid: "Yes",
+      Discount: "5%",
     },
     {
-      Name: "Jane Smith",
-      Date: "Feb, 15",
-      Salary: "150,000",
-      Bonus: "15,000",
-      ID: "5678",
-      Total: "$600",
-      Remaining: "$500",
-      Paid: "$100",
-      "Due Date": "30, May",
-      "Payment Method": "Card",
+      "Order Number": "002",
+      Customer: "Jane Smith",
+      Date: "2025-01-02",
+      "Created On": "2025-01-02",
+      Amount: "$150",
+      Paid: "No",
+      Discount: "10%",
+    },
+    {
+      "Order Number": "003",
+      Customer: "Mike Johnson",
+      Date: "2025-01-03",
+      "Created On": "2025-01-03",
+      Amount: "$300",
+      Paid: "Yes",
+      Discount: "0%",
+    },
+    {
+      "Order Number": "004",
+      Customer: "Emily Davis",
+      Date: "2025-01-04",
+      "Created On": "2025-01-04",
+      Amount: "$400",
+      Paid: "Yes",
+      Discount: "15%",
+    },
+    {
+      "Order Number": "005",
+      Customer: "David Brown",
+      Date: "2025-01-05",
+      "Created On": "2025-01-05",
+      Amount: "$500",
+      Paid: "No",
+      Discount: "20%",
     },
   ];
 
@@ -56,7 +76,7 @@ const CustomersPage = () => {
         <div className="p-2">
           <div className="flex items-center justify-between">
             <p className="text-[24px] text-supporting_gray border-l border-[#000000] pl-4">
-              Add Service
+              Add Sales
             </p>
             <div className="flex items-center gap-4">
               <button
@@ -70,6 +90,10 @@ const CustomersPage = () => {
                 <img src={saveIcon} alt="save-Icon" />
                 <span className="text-[16px] text-white">Save</span>
               </button>
+              <button className="flex items-center gap-4 bg-supporting_blue rounded-[10px] py-3 px-4 cursor-pointer">
+                <img src={saveIcon} alt="save-Icon" />
+                <span className="text-[16px] text-white">Save & Paid</span>
+              </button>
             </div>
           </div>
 
@@ -77,32 +101,64 @@ const CustomersPage = () => {
           <div className="p-12 bg-white border rounded-lg shadow-lg mt-5">
             <div className="flex items-center gap-x-4">
               <p className="text-[16px] font-bold text-supporting_gray w-32 flex-shrink-0">
-                Name
+                Customer
               </p>
-
-              <Input value={"John Doe"} />
+              <Dropdown
+                label="Select Customer"
+                options={["Option 4", "Option 2"]}
+              />
             </div>
 
             <div className="flex mt-5 gap-x-4">
               <div className="flex items-center gap-x-4 flex-1">
                 <p className="text-[16px]  font-bold text-supporting_gray w-32 flex-shrink-0">
-                  Mobile Number
+                  Item
                 </p>
-                <Input value={"123456789"} />
+                <Dropdown
+                  label="Select Item"
+                  options={["Option 4", "Option 2"]}
+                />
+              </div>
+            </div>
+
+            <div className="flex mt-5 gap-x-4">
+              <div className="flex items-center gap-x-4 flex-1">
+                <p className="text-[16px]  font-bold text-supporting_gray w-32 flex-shrink-0">
+                  Price
+                </p>
+                <Input value={"350 Rs"} />
+              </div>
+            </div>
+
+            <div className="flex mt-5 gap-x-4">
+              <div className="flex items-center gap-x-4 flex-1">
+                <p className="text-[16px]  font-bold text-supporting_gray w-32 flex-shrink-0">
+                  Price
+                </p>
+                <Input value={"350 Rs"} />
+              </div>
+            </div>
+
+            <div className="flex mt-5 gap-x-4">
+              <div className="flex items-center gap-x-4 flex-1">
+                <p className="text-[16px]  font-bold text-supporting_gray w-32 flex-shrink-0">
+                  Quantity
+                </p>
+                <Input value={"0"} />
               </div>
             </div>
           </div>
           <div className="flex items-center justify-end mt-5">
             <button className="flex items-center gap-4 bg-supporting_blue rounded-[10px] py-3 px-4 cursor-pointer">
               <img src={addIcon} alt="add-Icon" />
-              <span className="text-[16px] text-white">Add Vehicle</span>
+              <span className="text-[16px] text-white">Add Item</span>
             </button>
           </div>
         </div>
       ) : (
         <div>
           <LayoutHeader
-            titleName={"Customers"}
+            titleName={"Sales"}
             onAddNew={() => setShowForm(true)}
           />
           <UniversalTable headers={headers} data={data} />
@@ -119,4 +175,4 @@ const CustomersPage = () => {
   );
 };
 
-export default CustomersPage;
+export default SalesPage;
