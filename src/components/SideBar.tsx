@@ -20,12 +20,23 @@ type SideBarProps = {
   setIsOpen: (isOpen: boolean) => void;
 };
 const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
-  const [activeMenu, setActiveMenu] = useState<number>(0);
+  const [activeMenu, setActiveMenu] = useState<string>("");
   const navigate = useNavigate();
   const location = useLocation();
-  const handleActive = (index: number, route: string) => {
-    setActiveMenu(index);
+  const [openDropdowns, setOpenDropdowns] = useState<{
+    [key: number]: boolean;
+  }>({});
+
+  const handleActive = (route: string) => {
+    setActiveMenu(route);
     navigate(route);
+  };
+
+  const toggleDropdown = (index: number) => {
+    setOpenDropdowns((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
   };
 
   const menuItems = [
@@ -34,19 +45,50 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
     { name: "Customers", icon: customerSvg, route: "/customers" },
     { name: "Items", icon: itemsSvg, route: "/items" },
     { name: "Sales", icon: salesSvg, route: "/sales" },
-    { name: "Expenses", icon: expenseSvg, route: "", isDropDown: true },
+    {
+      name: "Expenses",
+      icon: expenseSvg,
+      route: "",
+      isDropDown: true,
+      dropdownItems: [
+        { name: "Expense", route: "/expense" },
+        { name: "Expenses Category", route: "/expense-category" },
+        { name: "Expense Item", route: "/expense-item" },
+      ],
+    },
     { name: "Petty Cash", icon: cashSvg, route: "" },
     { name: "Message Centre", icon: messageSvg, route: "" },
     { name: "Inventory", icon: inventorySvg, route: "" },
-    { name: "Reports", icon: reportsSvg, route: "", isDropDown: true },
+    {
+      name: "Reports",
+      icon: reportsSvg,
+      route: "",
+      isDropDown: true,
+      dropdownItems: [
+        { name: "Daily Reports", route: "/daily-reports" },
+        { name: "Monthly Reports", route: "/monthly-reports" },
+      ],
+    },
     { name: "Logout", icon: logoutSvg, route: "" },
   ];
 
   useEffect(() => {
-    const activeRoute = menuItems.findIndex(
-      (item) => item.route === location.pathname
+    const activeRoute = menuItems.find(
+      (item) =>
+        item.route === location.pathname ||
+        (item.isDropDown &&
+          item.dropdownItems?.some(
+            (dropdownItem) => dropdownItem.route === location.pathname
+          ))
     );
-    setActiveMenu(activeRoute !== -1 ? activeRoute : 0);
+
+    if (activeRoute) {
+      setActiveMenu(location.pathname);
+      if (activeRoute.isDropDown) {
+        const dropdownIndex = menuItems.indexOf(activeRoute);
+        setOpenDropdowns((prev) => ({ ...prev, [dropdownIndex]: true }));
+      }
+    }
   }, [location]);
 
   return (
@@ -67,31 +109,66 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
       <div className="mt-5">
         {isOpen &&
           menuItems.map((item, index) => (
-            <div
-              onClick={() => handleActive(index, item.route)}
-              key={index}
-              className={`cursor-pointer flex items-center justify-start px-10 py-3 ${
-                activeMenu === index ? "bg-secondary" : "bg-transparent"
-              }`}
-            >
+            <div key={index} className="flex flex-col">
               <div
-                className={`transition-all ${
-                  activeMenu === index ? "filter invert hue-rotate-90" : ""
+                onClick={() =>
+                  item.isDropDown
+                    ? toggleDropdown(index)
+                    : handleActive(item.route)
+                }
+                className={`cursor-pointer flex items-center justify-start px-10 py-3 ${
+                  activeMenu === item.route ? "bg-secondary" : "bg-transparent"
                 }`}
               >
-                <img src={item.icon} alt={`${item.name}-icon`} />
+                <div
+                  className={`transition-all ${
+                    activeMenu === item.route
+                      ? "filter invert hue-rotate-90"
+                      : ""
+                  }`}
+                >
+                  <img src={item.icon} alt={`${item.name}-icon`} />
+                </div>
+
+                <span
+                  className={`mx-5 text-[18px] ${
+                    activeMenu === item.route
+                      ? "text-[#ffffff]"
+                      : "text-[#000000]"
+                  }`}
+                >
+                  {item.name}
+                </span>
+                {item.isDropDown && (
+                  <div>
+                    <img
+                      src={downArrow}
+                      alt={`downArrow`}
+                      className={`transition-transform ${
+                        openDropdowns[index] ? "rotate-180" : ""
+                      }`}
+                    />
+                  </div>
+                )}
               </div>
 
-              <span
-                className={`mx-5 text-[18px] ${
-                  activeMenu === index ? "text-[#ffffff]" : "text-[#000000]"
-                }`}
-              >
-                {item.name}
-              </span>
-              {item.isDropDown && (
-                <div>
-                  <img src={downArrow} alt={`downArrow`} />
+              {item.isDropDown && openDropdowns[index] && (
+                <div className="px-10 my-2">
+                  {item.dropdownItems?.map((dropdownItem, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => handleActive(dropdownItem.route)}
+                      className={`cursor-pointer py-2 px-4 ${
+                        activeMenu === dropdownItem.route
+                          ? "bg-secondary text-[#ffffff]"
+                          : "bg-transparent text-[#000000]"
+                      }`}
+                    >
+                      <span className="mx-5 text-[18px]">
+                        {dropdownItem.name}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
