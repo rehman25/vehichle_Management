@@ -9,10 +9,10 @@ import HomePage from "./pages/HomePage";
 import ServicesPage from "./pages/ServicesPage";
 import CustomersPage from "./pages/CustomersPage";
 import ItemsPage from "./pages/ItemsPage";
+import SalesPage from "./pages/SalesPage";
 
 type AppProps = {};
 const App: React.FC<AppProps> = () => {
-  // comment here
   return (
     <Router>
       <Routes>
@@ -25,6 +25,7 @@ const App: React.FC<AppProps> = () => {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/customers" element={<CustomersPage />} />
         <Route path="/items" element={<ItemsPage />} />
+        <Route path="/sales" element={<SalesPage />} />
       </Routes>
     </Router>
   );
