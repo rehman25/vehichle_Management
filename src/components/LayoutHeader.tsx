@@ -5,9 +5,14 @@ import plusIcon from "../assets/images/plus-icon.svg";
 type LayoutHeaderProps = {
   titleName?: string;
   onAddNew?: () => void;
+  removeStatistics?: boolean;
 };
 
-const LayoutHeader: React.FC<LayoutHeaderProps> = ({ titleName, onAddNew }) => {
+const LayoutHeader: React.FC<LayoutHeaderProps> = ({
+  titleName,
+  onAddNew,
+  removeStatistics,
+}) => {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 p-2">
       <div className="flex items-center gap-4 bg-secondary rounded-[10px] w-auto py-3 px-4">
@@ -26,28 +31,30 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({ titleName, onAddNew }) => {
           placeholder="Search"
         />
 
-        <div className="flex items-center gap-4 bg-supporting_blue py-3 px-4 rounded-[10px]">
-          <div className="flex items-center gap-2">
-            <span className="text-[16px] text-white">Today</span>
-            <div className="bg-white h-[28px] rounded-full flex items-center px-2">
-              <span className="text-[13px]">18500</span>
+        {!removeStatistics && (
+          <div className="flex items-center gap-4 bg-supporting_blue py-3 px-4 rounded-[10px]">
+            <div className="flex items-center gap-2">
+              <span className="text-[16px] text-white">Today</span>
+              <div className="bg-white h-[28px] rounded-full flex items-center px-2">
+                <span className="text-[13px]">18500</span>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-[16px] text-white">This Week</span>
-            <div className="bg-white h-[28px] rounded-full flex items-center px-2">
-              <span className="text-[13px]">1850000</span>
+            <div className="flex items-center gap-2">
+              <span className="text-[16px] text-white">This Week</span>
+              <div className="bg-white h-[28px] rounded-full flex items-center px-2">
+                <span className="text-[13px]">1850000</span>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-[16px] text-white">This Month</span>
-            <div className="bg-white h-[28px] rounded-full flex items-center px-2">
-              <span className="text-[13px]">2285000</span>
+            <div className="flex items-center gap-2">
+              <span className="text-[16px] text-white">This Month</span>
+              <div className="bg-white h-[28px] rounded-full flex items-center px-2">
+                <span className="text-[13px]">2285000</span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div
           onClick={onAddNew}

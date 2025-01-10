@@ -10,6 +10,9 @@ import ServicesPage from "./pages/ServicesPage";
 import CustomersPage from "./pages/CustomersPage";
 import ItemsPage from "./pages/ItemsPage";
 import SalesPage from "./pages/SalesPage";
+import ExpensePage from "./pages/ExpensePage";
+import ExpenseCategoryPage from "./pages/ExpenseCategoryPage";
+import ExpenseItemPage from "./pages/ExpenseItemPage";
 
 type AppProps = {};
 const App: React.FC<AppProps> = () => {
@@ -26,6 +29,9 @@ const App: React.FC<AppProps> = () => {
         <Route path="/customers" element={<CustomersPage />} />
         <Route path="/items" element={<ItemsPage />} />
         <Route path="/sales" element={<SalesPage />} />
+        <Route path="/expense" element={<ExpensePage />} />
+        <Route path="/expense-category" element={<ExpenseCategoryPage />} />
+        <Route path="/expense-item" element={<ExpenseItemPage />} />
       </Routes>
     </Router>
   );

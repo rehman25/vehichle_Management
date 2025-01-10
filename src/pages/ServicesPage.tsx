@@ -1,7 +1,7 @@
 import Layout from "../constant/Layout";
 import LayoutHeader from "../components/LayoutHeader";
 import UniversalTable from "../components/UniversalTable";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import arrowIcon from "../assets/images/arrow-icon.svg";
 import saveIcon from "../assets/images/save-btn.svg";
 import paidIcon from "../assets/images/saveandpaid.svg";
@@ -9,6 +9,7 @@ import addIcon from "../assets/images/add-icon.svg";
 import Dropdown from "../components/Dropdown";
 import Input from "../components/Input";
 import Pagination from "../components/Pagination";
+import ModalComponent from "../components/Modal";
 
 const ServicesPage = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -87,6 +88,15 @@ const ServicesPage = () => {
       "Payment Type": "Net Banking",
     },
   ];
+
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const handleOpenModal = () => {
+    if (modalRef.current) {
+      modalRef.current.classList.remove("hidden");
+      modalRef.current.classList.add("flex");
+    }
+  };
 
   return (
     <Layout>
@@ -192,7 +202,10 @@ const ServicesPage = () => {
             </div>
           </div>
           <div className="flex items-center justify-end mt-5">
-            <button className="flex items-center gap-4 bg-supporting_blue rounded-[10px] py-3 px-4 cursor-pointer">
+            <button
+              onClick={handleOpenModal}
+              className="flex items-center gap-4 bg-supporting_blue rounded-[10px] py-3 px-4 cursor-pointer"
+            >
               <img src={addIcon} alt="add-Icon" />
               <span className="text-[16px] text-white">Add Service</span>
             </button>
@@ -231,6 +244,29 @@ const ServicesPage = () => {
           />
         </div>
       )}
+      <ModalComponent modalRef={modalRef}>
+        <div>
+          <div className="flex items-center gap-x-4">
+            <p className="text-[16px] font-bold text-supporting_gray w-32 flex-shrink-0">
+              Item
+            </p>
+
+            <Dropdown label="Select Item" options={["Option 4", "Option 2"]} />
+          </div>
+          <div className="flex items-center gap-x-4 mt-5">
+            <p className="text-[16px] font-bold text-supporting_gray w-32 flex-shrink-0">
+              Quantity
+            </p>
+            <Input value="2" />
+          </div>
+          <div className="flex items-center gap-x-4 mt-5">
+            <p className="text-[16px] font-bold text-supporting_gray w-32 flex-shrink-0">
+              Price
+            </p>
+            <Input value="20" />
+          </div>
+        </div>
+      </ModalComponent>
     </Layout>
   );
 };

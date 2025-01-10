@@ -1,12 +1,14 @@
 import Layout from "../constant/Layout";
 import LayoutHeader from "../components/LayoutHeader";
 import UniversalTable from "../components/UniversalTable";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import arrowIcon from "../assets/images/arrow-icon.svg";
 import saveIcon from "../assets/images/save-btn.svg";
 import addIcon from "../assets/images/add-icon.svg";
 import Input from "../components/Input";
 import Pagination from "../components/Pagination";
+import ModalComponent from "../components/Modal";
+import Dropdown from "../components/Dropdown";
 
 const CustomersPage = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -49,6 +51,15 @@ const CustomersPage = () => {
       "Payment Method": "Card",
     },
   ];
+
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const handleOpenModal = () => {
+    if (modalRef.current) {
+      modalRef.current.classList.remove("hidden");
+      modalRef.current.classList.add("flex");
+    }
+  };
 
   return (
     <Layout>
@@ -93,7 +104,10 @@ const CustomersPage = () => {
             </div>
           </div>
           <div className="flex items-center justify-end mt-5">
-            <button className="flex items-center gap-4 bg-supporting_blue rounded-[10px] py-3 px-4 cursor-pointer">
+            <button
+              onClick={handleOpenModal}
+              className="flex items-center gap-4 bg-supporting_blue rounded-[10px] py-3 px-4 cursor-pointer"
+            >
               <img src={addIcon} alt="add-Icon" />
               <span className="text-[16px] text-white">Add Vehicle</span>
             </button>
@@ -115,6 +129,45 @@ const CustomersPage = () => {
           />
         </div>
       )}
+
+      <ModalComponent modalRef={modalRef}>
+        <div>
+          <div className="flex items-center gap-x-4">
+            <p className="text-[16px] font-bold text-supporting_gray w-32 flex-shrink-0">
+              Customer
+            </p>
+
+            <Dropdown
+              label="Select Customer"
+              options={["Option 4", "Option 2"]}
+            />
+          </div>
+          <div className="flex items-center gap-x-4 mt-5">
+            <p className="text-[16px] font-bold text-supporting_gray w-32 flex-shrink-0">
+              Car
+            </p>
+            <Input value="Hond City" />
+          </div>
+          <div className="flex items-center gap-x-4 mt-5">
+            <p className="text-[16px] font-bold text-supporting_gray w-32 flex-shrink-0">
+              Reading
+            </p>
+            <Input value="0" />
+          </div>
+          <div className="flex items-center gap-x-4 mt-5">
+            <p className="text-[16px] font-bold text-supporting_gray w-32 flex-shrink-0">
+              Last Visit
+            </p>
+            <Input type="date" value="" />
+          </div>
+          <div className="flex items-center gap-x-4 mt-5">
+            <p className="text-[16px] font-bold text-supporting_gray w-32 flex-shrink-0">
+              Last Visit
+            </p>
+            <input type="checkbox" />
+          </div>
+        </div>
+      </ModalComponent>
     </Layout>
   );
 };
