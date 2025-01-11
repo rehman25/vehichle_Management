@@ -6,12 +6,14 @@ type LayoutHeaderProps = {
   titleName?: string;
   onAddNew?: () => void;
   removeStatistics?: boolean;
+  removeBtn?: boolean;
 };
 
 const LayoutHeader: React.FC<LayoutHeaderProps> = ({
   titleName,
   onAddNew,
   removeStatistics,
+  removeBtn = false,
 }) => {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 p-2">
@@ -56,13 +58,15 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({
           </div>
         )}
 
-        <div
-          onClick={onAddNew}
-          className="flex items-center gap-4 bg-supporting_blue rounded-[10px] py-3 px-4 cursor-pointer"
-        >
-          <img src={plusIcon} alt="Add New Icon" />
-          <span className="text-[16px] text-white">Add New</span>
-        </div>
+        {!removeBtn && (
+          <div
+            onClick={onAddNew}
+            className="flex items-center gap-4 bg-supporting_blue rounded-[10px] py-3 px-4 cursor-pointer"
+          >
+            <img src={plusIcon} alt="Add New Icon" />
+            <span className="text-[16px] text-white">Add New</span>
+          </div>
+        )}
       </div>
     </div>
   );

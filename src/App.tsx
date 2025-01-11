@@ -13,6 +13,8 @@ import SalesPage from "./pages/SalesPage";
 import ExpensePage from "./pages/ExpensePage";
 import ExpenseCategoryPage from "./pages/ExpenseCategoryPage";
 import ExpenseItemPage from "./pages/ExpenseItemPage";
+import PettyCashPage from "./pages/PettyCashPage";
+import MessageCenterPage from "./pages/MessageCenterPage";
 
 type AppProps = {};
 const App: React.FC<AppProps> = () => {
@@ -32,6 +34,8 @@ const App: React.FC<AppProps> = () => {
         <Route path="/expense" element={<ExpensePage />} />
         <Route path="/expense-category" element={<ExpenseCategoryPage />} />
         <Route path="/expense-item" element={<ExpenseItemPage />} />
+        <Route path="/petty-cash" element={<PettyCashPage />} />
+        <Route path="/message-center" element={<MessageCenterPage />} />
       </Routes>
     </Router>
   );

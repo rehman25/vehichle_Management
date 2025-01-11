@@ -5,11 +5,16 @@ import detailIcon from "../assets/images/detail-icon.svg";
 import printIcon from "../assets/images/print-icon.svg";
 
 type UniversalTableProps = {
-  headers: string[]; 
-  data: Array<{ [key: string]: any }>; 
+  headers: string[];
+  data: Array<{ [key: string]: any }>;
+  isAction?: boolean;
 };
 
-const UniversalTable: React.FC<UniversalTableProps> = ({ headers, data }) => {
+const UniversalTable: React.FC<UniversalTableProps> = ({
+  headers,
+  data,
+  isAction = true,
+}) => {
   return (
     <div className="overflow-x-auto p-2 mt-2">
       <table className="w-full table-auto bg-white shadow-md border border-[#E2E2E2]">
@@ -23,9 +28,11 @@ const UniversalTable: React.FC<UniversalTableProps> = ({ headers, data }) => {
                 {header}
               </th>
             ))}
-            <th className="px-4 py-3 border border-[#E2E2E2] text-[12px]">
-              Action
-            </th>
+            {isAction && (
+              <th className="px-4 py-3 border border-[#E2E2E2] text-[12px]">
+                Action
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -36,23 +43,25 @@ const UniversalTable: React.FC<UniversalTableProps> = ({ headers, data }) => {
                   key={colIndex}
                   className="px-4 py-2 border border-[#E2E2E2]"
                 >
-                  {row[header] ?? "-"} 
+                  {row[header] ?? "-"}
                 </td>
               ))}
-              <td className="px-4 py-2 flex gap-2 justify-center">
-                <button className="w-[29px] h-[29px] flex items-center justify-center bg-secondary rounded-[5px] text-white">
-                  <img src={deleteIcon} alt="deleteIcon" />
-                </button>
-                <button className="w-[29px] h-[29px] flex items-center justify-center bg-primary rounded-[5px] text-white">
-                  <img src={editIcon} alt="editIcon" />
-                </button>
-                <button className="w-[29px] h-[29px] flex items-center justify-center bg-supporting_blue rounded-[5px] text-white">
-                  <img src={detailIcon} alt="detailIcon" />
-                </button>
-                <button className="w-[29px] h-[29px] flex items-center justify-center bg-supporting_green rounded-[5px] text-white">
-                  <img src={printIcon} alt="printIcon" />
-                </button>
-              </td>
+              {isAction && (
+                <td className="px-4 py-2 flex gap-2 justify-center">
+                  <button className="w-[29px] h-[29px] flex items-center justify-center bg-secondary rounded-[5px] text-white">
+                    <img src={deleteIcon} alt="deleteIcon" />
+                  </button>
+                  <button className="w-[29px] h-[29px] flex items-center justify-center bg-primary rounded-[5px] text-white">
+                    <img src={editIcon} alt="editIcon" />
+                  </button>
+                  <button className="w-[29px] h-[29px] flex items-center justify-center bg-supporting_blue rounded-[5px] text-white">
+                    <img src={detailIcon} alt="detailIcon" />
+                  </button>
+                  <button className="w-[29px] h-[29px] flex items-center justify-center bg-supporting_green rounded-[5px] text-white">
+                    <img src={printIcon} alt="printIcon" />
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
