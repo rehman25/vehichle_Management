@@ -69,7 +69,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
         { name: "Monthly Reports", route: "/monthly-reports" },
       ],
     },
-    { name: "Logout", icon: logoutSvg, route: "" },
+    { name: "Logout", icon: logoutSvg, route: "/" },
   ];
 
   useEffect(() => {
