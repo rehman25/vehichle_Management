@@ -16,6 +16,10 @@ import ExpenseItemPage from "./pages/ExpenseItemPage";
 import PettyCashPage from "./pages/PettyCashPage";
 import MessageCenterPage from "./pages/MessageCenterPage";
 import InventoryPage from "./pages/InventoryPage";
+import ReportsDailySalesPage from "./pages/ReportsDailySalesPage";
+import ReportExpensePage from "./pages/ReportExpensePage";
+import ReportPettyCashPage from "./pages/ReportPettyCashPage";
+import CreditServicingPage from "./pages/CreditServicingPage";
 
 type AppProps = {};
 const App: React.FC<AppProps> = () => {
@@ -38,6 +42,10 @@ const App: React.FC<AppProps> = () => {
         <Route path="/petty-cash" element={<PettyCashPage />} />
         <Route path="/message-center" element={<MessageCenterPage />} />
         <Route path="/inventory" element={<InventoryPage />} />
+        <Route path="/report-daily-sales" element={<ReportsDailySalesPage />} />
+        <Route path="/report-expense" element={<ReportExpensePage />} />
+        <Route path="/report-petty-cash" element={<ReportPettyCashPage />} />
+        <Route path="/credit-servicing" element={<CreditServicingPage />} />
       </Routes>
     </Router>
   );
