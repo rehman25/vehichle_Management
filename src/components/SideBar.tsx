@@ -56,9 +56,9 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
         { name: "Expense Item", route: "/expense-item" },
       ],
     },
-    { name: "Petty Cash", icon: cashSvg, route: "" },
-    { name: "Message Centre", icon: messageSvg, route: "" },
-    { name: "Inventory", icon: inventorySvg, route: "" },
+    { name: "Petty Cash", icon: cashSvg, route: "/petty-cash" },
+    { name: "Message Centre", icon: messageSvg, route: "/message-center" },
+    { name: "Inventory", icon: inventorySvg, route: "/inventory" },
     {
       name: "Reports",
       icon: reportsSvg,

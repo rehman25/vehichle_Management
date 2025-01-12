@@ -1,20 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import deleteIcon from "../assets/images/delete-icon.svg";
 import editIcon from "../assets/images/edit-icon.svg";
 import detailIcon from "../assets/images/detail-icon.svg";
 import printIcon from "../assets/images/print-icon.svg";
 
-type UniversalTableProps = {
+type EditableTableProps = {
   headers: string[];
   data: Array<{ [key: string]: any }>;
   isAction?: boolean;
 };
 
-const UniversalTable: React.FC<UniversalTableProps> = ({
+const EditableTable: React.FC<EditableTableProps> = ({
   headers,
   data,
   isAction = true,
 }) => {
+  const [tableData, setTableData] = useState(data);
+
+  const handleInputChange = (
+    rowIndex: number,
+    header: string,
+    value: string
+  ) => {
+    const updatedData = [...tableData];
+    updatedData[rowIndex][header] = value;
+    setTableData(updatedData);
+  };
+
   return (
     <div className="overflow-x-auto p-2 mt-2">
       <table className="w-full table-auto bg-white shadow-md border border-[#E2E2E2]">
@@ -36,14 +48,21 @@ const UniversalTable: React.FC<UniversalTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {data.map((row, rowIndex) => (
+          {tableData.map((row, rowIndex) => (
             <tr key={rowIndex} className="bg-white transition">
               {headers.map((header, colIndex) => (
                 <td
                   key={colIndex}
                   className="px-4 py-2 border border-[#E2E2E2]"
                 >
-                  {row[header] ?? "-"}
+                  <input
+                    type="text"
+                    value={row[header] ?? ""}
+                    onChange={(e) =>
+                      handleInputChange(rowIndex, header, e.target.value)
+                    }
+                    className="w-full border border-gray-300 rounded px-2 py-1 text-sm"
+                  />
                 </td>
               ))}
               {isAction && (
@@ -70,4 +89,4 @@ const UniversalTable: React.FC<UniversalTableProps> = ({
   );
 };
 
-export default UniversalTable;
+export default EditableTable;
