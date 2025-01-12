@@ -65,8 +65,10 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
       route: "",
       isDropDown: true,
       dropdownItems: [
-        { name: "Daily Reports", route: "/daily-reports" },
-        { name: "Monthly Reports", route: "/monthly-reports" },
+        { name: "Report Daily Sales", route: "/report-daily-sales" },
+        { name: "Report Expense", route: "/report-expense" },
+        { name: "Report Petty Cash", route: "/report-petty-cash" },
+        { name: "Credit Servicing", route: "/credit-servicing" },
       ],
     },
     { name: "Logout", icon: logoutSvg, route: "/" },

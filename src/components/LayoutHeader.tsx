@@ -7,6 +7,8 @@ type LayoutHeaderProps = {
   onAddNew?: () => void;
   removeStatistics?: boolean;
   removeBtn?: boolean;
+  dateExist?: boolean;
+  addBtnText?: string;
 };
 
 const LayoutHeader: React.FC<LayoutHeaderProps> = ({
@@ -14,6 +16,8 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({
   onAddNew,
   removeStatistics,
   removeBtn = false,
+  dateExist,
+  addBtnText = "Add New",
 }) => {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 p-2">
@@ -27,11 +31,33 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({
       </div>
 
       <div className="flex items-center gap-4">
-        <input
-          type="text"
-          className="w-[344px] max-w-full border border-supporting_blue px-2 py-2 font-givonic-regular outline-none placeholder:text-black text-[16px]"
-          placeholder="Search"
-        />
+        {dateExist ? (
+          <div className="flex items-center">
+            <div className="flex items-center">
+              <div className="text-[16px]">From Date</div>
+              <input
+                type="date"
+                className="w-[150px] max-w-full border border-supporting_blue px-2 py-2 font-givonic-regular outline-none placeholder:text-black text-[16px] mx-4 rounded-[10px]"
+                placeholder="Search"
+              />
+            </div>
+
+            <div className="flex items-center">
+              <div className="text-[16px]">To Date</div>
+              <input
+                type="date"
+                className="w-[150px] max-w-full border border-supporting_blue px-2 py-2 font-givonic-regular outline-none placeholder:text-black text-[16px] mx-4 rounded-[10px]"
+                placeholder="Search"
+              />
+            </div>
+          </div>
+        ) : (
+          <input
+            type="text"
+            className="w-[344px] max-w-full border border-supporting_blue px-2 py-2 font-givonic-regular outline-none placeholder:text-black text-[16px]"
+            placeholder="Search"
+          />
+        )}
 
         {!removeStatistics && (
           <div className="flex items-center gap-4 bg-supporting_blue py-3 px-4 rounded-[10px]">
@@ -64,7 +90,7 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({
             className="flex items-center gap-4 bg-supporting_blue rounded-[10px] py-3 px-4 cursor-pointer"
           >
             <img src={plusIcon} alt="Add New Icon" />
-            <span className="text-[16px] text-white">Add New</span>
+            <span className="text-[16px] text-white">{addBtnText}</span>
           </div>
         )}
       </div>
