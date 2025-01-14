@@ -79,7 +79,10 @@ const HomePage: React.FC<HomePageProps> = () => {
       <div className="p-3">
         <div className="grid grid-cols-2 gap-4">
           {Array.from({ length: 6 }).map((_, index) => (
-            <div className="w-full h-auto" key={index}>
+            <div
+              className="w-full h-auto flex justify-center items-center"
+              key={index}
+            >
               <Bar data={data} options={options} />
             </div>
           ))}
