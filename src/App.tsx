@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router";
 import SplashPage from "./pages/SplashPage";
 import LoginPage from "./pages/Auth/LoginPage";
 import SIgnUpPage from "./pages/Auth/SIgnUpPage";
@@ -15,10 +16,15 @@ import ExpenseItemPage from "./pages/ExpenseItemPage";
 import PettyCashPage from "./pages/PettyCashPage";
 import MessageCenterPage from "./pages/MessageCenterPage";
 import InventoryPage from "./pages/InventoryPage";
-import ReportsDailySalesPage from "./pages/ReportsDailySalesPage";
-import ReportExpensePage from "./pages/ReportExpensePage";
+import ReportsDailySalesPage from "./pages/CustomerLedger";
+// import ReportExpensePage from "./pages/ReportExpensePage";
 import ReportPettyCashPage from "./pages/ReportPettyCashPage";
 import CreditServicingPage from "./pages/CreditServicingPage";
+import Vehicle from "./pages/Vehicle";
+import TransferVehicle from "./pages/TransferVehicle";
+import PaymentCollections from "./pages/Payment&Collections";
+import CustomerBalanceSummary from "./pages/CustomerBalanceSummary";
+import GeneralTransaction from "./pages/GeneralTransaction";
 
 type AppProps = {};
 const App: React.FC<AppProps> = () => {
@@ -41,10 +47,14 @@ const App: React.FC<AppProps> = () => {
         <Route path="/petty-cash" element={<PettyCashPage />} />
         <Route path="/message-center" element={<MessageCenterPage />} />
         <Route path="/inventory" element={<InventoryPage />} />
-        <Route path="/report-daily-sales" element={<ReportsDailySalesPage />} />
-        <Route path="/report-expense" element={<ReportExpensePage />} />
+        <Route path="/CustomerLedger" element={<ReportsDailySalesPage />} />
+        <Route path="/CustomerBalanceSummary" element={<CustomerBalanceSummary />} />
         <Route path="/report-petty-cash" element={<ReportPettyCashPage />} />
         <Route path="/credit-servicing" element={<CreditServicingPage />} />
+        <Route path="/Vehicle" element={<Vehicle />} />
+        <Route path="/TransferVehicle" element={<TransferVehicle />} />
+        <Route path="/PaymentCollections" element={<PaymentCollections />} />
+        <Route path="/GeneralTransaction" element={<GeneralTransaction />} />
       </Routes>
     </Router>
   );

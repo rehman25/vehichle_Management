@@ -4,16 +4,14 @@ import closeIcon from "../assets/images/close-icon.svg";
 import dashboardSvg from "../assets/images/dashboard-icon.svg";
 import servicesSvg from "../assets/images/services-logo.svg";
 import customerSvg from "../assets/images/customer-icon.svg";
-import itemsSvg from "../assets/images/items-icon.svg";
-import salesSvg from "../assets/images/sales-icon.svg";
-import expenseSvg from "../assets/images/expense-icon.svg";
-import cashSvg from "../assets/images/cash-icon.svg";
-import messageSvg from "../assets/images/message-icon.svg";
-import inventorySvg from "../assets/images/inventory-icon.svg";
+import Transfer from "../assets/images/transfer.svg"
+import payment from "../assets/images/payment.svg"
+import vehicle from "../assets/images/iconmonstr-car-3.svg"
 import reportsSvg from "../assets/images/reports-icon.svg";
+import itemSvg from '../assets/images/items-icon.svg'
 import logoutSvg from "../assets/images/logout-icon.svg";
 import downArrow from "../assets/images/dropdown-icon.svg";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
 type SideBarProps = {
   isOpen: boolean;
@@ -43,31 +41,34 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
     { name: "Dashboard", icon: dashboardSvg, route: "/dashboard" },
     { name: "Services", icon: servicesSvg, route: "/services" },
     { name: "Customers", icon: customerSvg, route: "/customers" },
-    { name: "Items", icon: itemsSvg, route: "/items" },
-    { name: "Sales", icon: salesSvg, route: "/sales" },
-    {
-      name: "Expenses",
-      icon: expenseSvg,
-      route: "",
-      isDropDown: true,
-      dropdownItems: [
-        { name: "Expense", route: "/expense" },
-        { name: "Expenses Category", route: "/expense-category" },
-        { name: "Expense Item", route: "/expense-item" },
-      ],
-    },
-    { name: "Petty Cash", icon: cashSvg, route: "/petty-cash" },
-    { name: "Message Centre", icon: messageSvg, route: "/message-center" },
-    { name: "Inventory", icon: inventorySvg, route: "/inventory" },
+    { name: "Vehicle", icon: vehicle, route: "/Vehicle" },
+    { name: "Transfer", icon: Transfer, route: "/TransferVehicle" },
+    { name: "Payment & Collection", icon: payment, route: "/PaymentCollections" },
+    { name: "Items", icon: itemSvg, route: "/items" },
+    // { name: "Sales", icon: salesSvg, route: "/sales" },
+    // {
+    //   name: "Expenses",
+    //   icon: expenseSvg,
+    //   route: "",
+    //   isDropDown: true,
+    //   dropdownItems: [
+    //     { name: "Expense", route: "/expense" },
+    //     { name: "Expenses Category", route: "/expense-category" },
+    //     { name: "Expense Item", route: "/expense-item" },
+    //   ],
+    // },
+    // { name: "Petty Cash", icon: cashSvg, route: "/petty-cash" },
+    // { name: "Message Centre", icon: messageSvg, route: "/message-center" },
+    // { name: "Inventory", icon: inventorySvg, route: "/inventory" },
     {
       name: "Reports",
       icon: reportsSvg,
       route: "",
       isDropDown: true,
       dropdownItems: [
-        { name: "Report Daily Sales", route: "/report-daily-sales" },
-        { name: "Report Expense", route: "/report-expense" },
-        { name: "Report Petty Cash", route: "/report-petty-cash" },
+        { name: "Customer Ledger", route: "/CustomerLedger" },
+        { name: "Customer Balance", route: "/CustomerBalanceSummary" },
+        { name: "General Transaction", route: "/GeneralTransaction" },
         { name: "Credit Servicing", route: "/credit-servicing" },
       ],
     },
@@ -96,7 +97,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
   return (
     <div
       className={`fixed top-0 left-0 h-full  transition-all duration-300 ${
-        isOpen ? "w-[18%]" : "w-0"
+        isOpen ? "w-[20%]" : "w-0"
       } overflow-y-auto`}
     >
       <div className="flex items-center justify-between px-6">
@@ -129,11 +130,11 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
                       : ""
                   }`}
                 >
-                  <img src={item.icon} alt={`${item.name}-icon`} />
+                  <img src={item.icon} alt={`${item.name}-icon`} style={{width:"35px", height:"25px"}} />
                 </div>
 
                 <span
-                  className={`mx-5 text-[18px] ${
+                  className={`mx-5 text-[14px] ${
                     activeMenu === item.route
                       ? "text-[#ffffff]"
                       : "text-[#000000]"
@@ -166,7 +167,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
                           : "bg-transparent text-[#000000]"
                       }`}
                     >
-                      <span className="mx-5 text-[18px]">
+                      <span className="mx-5 text-[14px]">
                         {dropdownItem.name}
                       </span>
                     </div>

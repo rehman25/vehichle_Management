@@ -8,7 +8,6 @@ type LayoutProps = {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
-  console.log(isOpen, "isOpen");
   return (
     <div className="flex h-screen">
       <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
