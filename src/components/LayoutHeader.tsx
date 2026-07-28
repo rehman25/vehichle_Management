@@ -3,21 +3,28 @@ import servicesSvg from "../assets/images/services-logo.svg";
 import plusIcon from "../assets/images/plus-icon.svg";
 
 type LayoutHeaderProps = {
+  value?:string;
   titleName?: string;
   onAddNew?: () => void;
   removeStatistics?: boolean;
   removeBtn?: boolean;
   dateExist?: boolean;
   addBtnText?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+
 };
 
 const LayoutHeader: React.FC<LayoutHeaderProps> = ({
   titleName,
   onAddNew,
+  value,
   removeStatistics,
   removeBtn = false,
   dateExist,
   addBtnText = "Add New",
+  onKeyDown,
+  onChange
 }) => {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 p-2">
@@ -27,7 +34,7 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({
           src={servicesSvg}
           alt="Services-icon"
         />
-        <span className="text-[20px] text-white">{titleName}</span>
+        <span className="text-[16px] text-white">{titleName}</span>
       </div>
 
       <div className="flex items-center gap-4">
@@ -39,6 +46,10 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({
                 type="date"
                 className="w-[150px] max-w-full border border-supporting_blue px-2 py-2 font-givonic-regular outline-none placeholder:text-black text-[16px] mx-4 rounded-[10px]"
                 placeholder="Search"
+                value={value}
+                 
+                
+                
               />
             </div>
 
@@ -56,6 +67,8 @@ const LayoutHeader: React.FC<LayoutHeaderProps> = ({
             type="text"
             className="w-[344px] max-w-full border border-supporting_blue px-2 py-2 font-givonic-regular outline-none placeholder:text-black text-[16px]"
             placeholder="Search"
+            onChange={onChange}
+            onKeyDown={onKeyDown} 
           />
         )}
 

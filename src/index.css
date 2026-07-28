@@ -27,3 +27,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.custom-table {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  
+  .ant-table-thead > tr > th {
+    background: linear-gradient(135deg, #2980B9 0%, #2980B9 100%);
+    color: white !important;
+    font-weight: 600;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .ant-table-tbody > tr:hover td {
+    background: #f8fafc !important;
+  }
+
+  .action-icon {
+    transition: all 0.3s ease;
+    padding: 6px;
+    border-radius: 6px;
+    
+    &:hover {
+      background: #f1f5f9;
+      transform: translateY(-2px);
+    }
+  }
+}

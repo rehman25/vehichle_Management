@@ -1,0 +1,54 @@
+export const CUSTOMER = "CUSTOMER" as const;
+export const GET_CUSTOMER_START = "GET CUSTOMER START" as const;
+export const GET_CUSTOMER_DATA = "GET CUSTOMER DATA" as const;
+export const GET_CUSTOMER_Byid_DATA = "GET CUSTOMER BY ID DATA" as const;
+export const GET_CUSTOMER_END = "GET CUSTOMER END" as const;
+
+
+export const GET_ITEM_TYPE = "GET ITEM TYPE" as const;
+export const GET_ITEM_START = "GET ITEM START" as const;
+export const GET_ITEM_DATA = "GET ITEM DATA" as const;
+export const GET_ITEM_END = "GET ITEM END" as const;
+
+export const VEHICLE = "VEHICLE" as const;
+export const GET_VEHICLE_START = "GET VEHICLE START" as const;
+export const GET_VEHICLE_DATA = "GET VEHICLE DATA" as const;
+export const GET_VEHICLE_DATA_BYID = "GET VEHICLE DATA By ID" as const;
+export const GET_VEHICLE_END = "GET VEHICLE END" as const;
+export const GET_VEHICLE_CUSTOMER_DATA = "GET SERVICES END" as const;
+
+
+export const SERVICES = "SERVICES" as const;
+export const GET_SERVICES_START = "GET SERVICES START" as const;
+export const GET_SERVICES_DATA = "GET SERVICES DATA" as const;
+export const GET_SERVICES_END = "GET SERVICES END" as const;
+export const GET_SERVICES_CUSTOMER_DATA = "GET SERVICES CUSTOMER END" as const;
+export const GET_SERVICES_PRODUCT_DATA = "GET SERVICES PRODUCT" as const;
+export const GET_SERVICES_PRINT_DATA = "GET SERVICES PRINT" as const;
+export const GET_PRINT_DATA = "GET PRINT PRINT" as const;
+
+
+export const TRANSFER_VEHICLE = "TRANSFER_VEHICLE" as const;
+export const TRANSFER_VEHICLE_START = "TRANSFER_VEHICLE START" as const;
+export const TRANSFER_VEHICLE_END = "TRANSFER_VEHICLE END" as const;
+
+
+export const PAYMENT_COLLECTION = "PAYMENT & COLLECTION" as const;
+export const PAYMENT_COLLECTION_START = "PAYMENT & COLLECTION START" as const;
+export const PAYMENT_COLLECTION_END = "PAYMENT & COLLECTION END" as const;
+export const PAYMENT_COLLECTION_INVOICES = "PAYMENT & COLLECTION INVOICES" as const;
+
+
+export const CUSTOMER_LEGDER = "CUSTOMER LEGDER" as const;
+export const CUSTOMER_LEGDER_START = "CUSTOMER LEGDER START" as const;
+export const CUSTOMER_LEGDER_END = "CUSTOMER LEGDER END" as const;
+export const CUSTOMER_LEGDER_DATA = "CUSTOMER LEGDER DATA" as const;
+
+
+export const CUSTOMER_BALANCE_SUMMARY_START = "CUSTOMER BALANCE SUMMARY START" as const;
+export const CUSTOMER_BALANCE_SUMMARY_END = "CUSTOMER BALANCE SUMMARY END" as const;
+export const CUSTOMER_BALANCE_SUMMARY_DATA = "CUSTOMER BALANCE SUMMARY DATA" as const;
+
+export const GENERAL_TRANSACTION_START = "GENERAL TRANSACTION START" as const;
+export const GENERAL_TRANSACTION_END = "GENERAL TRANSACTION END" as const;
+export const GENERAL_TRANSACTION_DATA = "GENERAL TRANSACTION DATA" as const;

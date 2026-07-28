@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const VerificationPage = () => {
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>("");

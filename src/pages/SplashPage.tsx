@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import logo from "../assets/images/logo.svg";
 import RightSplashBackground from "../assets/images/right-splash.svg";
 import leftSplashBackground from "../assets/images/left-splash.svg";

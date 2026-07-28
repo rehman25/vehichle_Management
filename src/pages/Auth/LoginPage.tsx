@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import loginLogo from "../../assets/images/login-logo.svg";
 import loginBg from "../../assets/images/Sign-In.jpg";
 

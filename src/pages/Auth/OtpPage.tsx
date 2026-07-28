@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "react-phone-number-input/style.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const OtpPage = () => {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
