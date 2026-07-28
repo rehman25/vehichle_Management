@@ -776,6 +776,12 @@ const ServicesPage: React.FC<Service> = ({
   }, [currentPage, pageSize, search]);
 
   useEffect(() => {
+    if (services_Red.data?.data) {
+      setTotalRecords(services_Red.data.data.totalCount ?? 0);
+    }
+  }, [services_Red.data]);
+
+  useEffect(() => {
     getCustomer({
       pageNumber: currentPage || 1,
       pageSize: pageSize,
