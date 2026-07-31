@@ -13,6 +13,7 @@ import detailIcon from "../assets/images/detail-icon.svg";
 import printIcon from "../assets/images/print-icon.svg";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,6 +28,8 @@ interface Service {
   getSERVICES: (Pagination: any) => unknown;
   services_Red: any;
   AddSERVICES: (formData: any) => unknown;
+  updateSERVICES: (formData: any) => unknown;
+  getServiceById: (id: number) => unknown;
   getCustomer: (customer: any) => unknown;
   getVehicleByID: (id: number) => unknown;
   getProduct: (customer: any) => unknown;
@@ -126,6 +129,8 @@ const ServicesPage: React.FC<Service> = ({
   getSERVICES,
   services_Red,
   AddSERVICES,
+  updateSERVICES,
+  getServiceById,
   getCustomer,
   getVehicleByID,
   getProduct,
@@ -140,6 +145,8 @@ const ServicesPage: React.FC<Service> = ({
   const [searchTerm, setSearchTerm] = useState<string>("");
   // const [isfilteredData, setFilteredData] = useState<DataSource[]>([]);
   const [search, setSearch] = useState("");
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [currentServiceId, setCurrentServiceId] = useState<number | null>(null);
   const [customerOptions, setCustomerOptions] = useState<any[]>([]);
   const [productOptions, setProductOptions] = useState<any[]>([]);
   const [vehicleOptions, setVehicleOptions] = useState<any[]>([]);
@@ -217,6 +224,12 @@ const ServicesPage: React.FC<Service> = ({
               alt="Details"
               className="w-[29px] h-[29px] flex items-center justify-center bg-secondary rounded-[5px] text-whites"
             />
+            <FaRegEdit
+              color="blue"
+              size={24}
+              style={{ cursor: "pointer" }}
+              onClick={() => handleEditService(record.serviceId)}
+            />
             <img
               src={printIcon}
               alt="Print"
@@ -239,6 +252,55 @@ const ServicesPage: React.FC<Service> = ({
       }
     } catch (error) {
       message.error("An error occurred while fetching print data.");
+    }
+  };
+
+  const handleEditService = async (id: number) => {
+    try {
+      const response: any = await getServiceById(id);
+      if (response?.data) {
+        const service = response.data;
+        setCurrentServiceId(service.serviceId);
+        setIsEditing(true);
+        reset({
+          customerId: service.customerId,
+          vehicleId: service.vehicleId,
+          serviceDate: service.serviceDate,
+          mileage: service.mileage,
+          dueMileage: service.dueMileage,
+          amount: service.amount,
+          discount: service.discount,
+          paidAmount: service.paidAmount,
+          Payable: service.paidAmount,
+          paymentTypeId: service.paymentType,
+          InstrumentNo: undefined,
+          services: service.services.map((item: any) => ({
+            productId: item.productId,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+        });
+        setCustomerOptions((prev) => {
+          if (prev.some((option) => option.value === service.customerId)) return prev;
+          return [...prev, { value: service.customerId, label: service.customerName }];
+        });
+        setVehicleOptions((prev) => {
+          if (prev.some((option) => option.value === service.vehicleId)) return prev;
+          return [...prev, { value: service.vehicleId, label: service.vehicleNo }];
+        });
+        setProductOptions((prev) => {
+          const existingIds = new Set(prev.map((option) => option.value));
+          const newOptions = service.services
+            .filter((item: any) => !existingIds.has(item.productId))
+            .map((item: any) => ({ value: item.productId, label: item.productName, price: item.price }));
+          return [...prev, ...newOptions];
+        });
+        setShowForm(true);
+      } else {
+        message.error("Failed to load service data");
+      }
+    } catch (error) {
+      message.error("Failed to load service data");
     }
   };
 
@@ -552,16 +614,18 @@ const ServicesPage: React.FC<Service> = ({
   };
 
   useEffect(() => {
-    if (showForm) {
+    if (showForm && !isEditing) {
       const currentDate = format(new Date(), "yyyy-MM-dd");
       setValue("serviceDate", currentDate);
     }
-  }, [showForm, setValue]);
+  }, [showForm, isEditing, setValue]);
 
   const submitCustomer = (data: ServiceFormValues) => {
     Modal.confirm({
-      title: "Confirm Service",
-      content: "Are you sure you want to add this service?",
+      title: isEditing ? "Confirm Update" : "Confirm Service",
+      content: isEditing
+        ? "Are you sure you want to update this service?"
+        : "Are you sure you want to add this service?",
       okText: "Confirm",
       cancelText: "Cancel",
       onOk: async () => {
@@ -583,27 +647,45 @@ const ServicesPage: React.FC<Service> = ({
               price: service.price,
             })),
           };
-          const res: any = await AddSERVICES(formData);
-          if (res.code === 200) {
-            message.success("Service added successfully!");
-            Modal.confirm({
-              title: "Print Receipt",
-              content: "Do you want to print the receipt now?",
-              okText: "Print",
-              cancelText: "Cancel",
-              onOk: () => printReceipt(res.data),
-            });
-            getSERVICES({
-              pageNumber: currentPage,
-              pageSize: pageSize,
-            });
-            setShowForm(false);
-            reset();
+
+          if (isEditing && currentServiceId) {
+            const res: any = await updateSERVICES({ id: currentServiceId, ...formData });
+            if (res.code === 200) {
+              message.success("Service updated successfully!");
+              getSERVICES({
+                pageNumber: currentPage,
+                pageSize: pageSize,
+              });
+              setShowForm(false);
+              setIsEditing(false);
+              setCurrentServiceId(null);
+              reset();
+            } else {
+              message.error(res.message);
+            }
           } else {
-            message.error(res.message);
+            const res: any = await AddSERVICES(formData);
+            if (res.code === 200) {
+              message.success("Service added successfully!");
+              Modal.confirm({
+                title: "Print Receipt",
+                content: "Do you want to print the receipt now?",
+                okText: "Print",
+                cancelText: "Cancel",
+                onOk: () => printReceipt(res.data),
+              });
+              getSERVICES({
+                pageNumber: currentPage,
+                pageSize: pageSize,
+              });
+              setShowForm(false);
+              reset();
+            } else {
+              message.error(res.message);
+            }
           }
         } catch (error) {
-          message.error("Failed to add service. Please try again.");
+          message.error(`Failed to ${isEditing ? "update" : "add"} service. Please try again.`);
         }
       },
     });
@@ -1141,7 +1223,12 @@ useEffect(() => {
         <div>
           <LayoutHeader
             titleName={"Services"}
-            onAddNew={() => setShowForm(true)}
+            onAddNew={() => {
+              setIsEditing(false);
+              setCurrentServiceId(null);
+              reset();
+              setShowForm(true);
+            }}
             onChange={(e) => handleSearch(e.target.value)}
             value={searchQuery}
           />
