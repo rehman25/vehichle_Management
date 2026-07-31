@@ -272,7 +272,7 @@ const ServicesPage: React.FC<Service> = ({
           discount: service.discount,
           paidAmount: service.paidAmount,
           Payable: service.paidAmount,
-          paymentTypeId: service.paymentType,
+          paymentTypeId: service.paymentType?.trim(),
           InstrumentNo: undefined,
           services: service.services.map((item: any) => ({
             productId: item.productId,

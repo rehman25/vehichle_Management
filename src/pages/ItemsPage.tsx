@@ -12,11 +12,13 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormSelect, FormInput } from "../components/basic";
+import { FaRegEdit } from "react-icons/fa";
 
 interface Customer {
   getItems: (Pagination: any) => unknown;
   Item_Red: any;
   AddItem: (formData: any) => unknown;
+  updateItem: (formData: any) => unknown;
   getType: () => unknown;
 }
 
@@ -67,6 +69,7 @@ const ItemsPage: React.FC<Customer> = ({
   Item_Red,
   getType,
   AddItem,
+  updateItem,
 }) => {
   const [showForm, setShowForm] = useState<boolean>(false);
   const [loadingText, setLoadingText] = useState<boolean>(true);
@@ -79,6 +82,8 @@ const ItemsPage: React.FC<Customer> = ({
   const [filteredData, setFilteredData] = useState<DataSource[]>([]);
   const [isCustomerLoading, setIsCustomerLoading] = useState(false);
   const [isLoader, setLoader] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [currentItemId, setCurrentItemId] = useState<number | null>(null);
 
   console.log(Item_Red);
 
@@ -104,6 +109,19 @@ const ItemsPage: React.FC<Customer> = ({
       title: "Available Quantity",
       dataIndex: `availableQuantity`,
       key: "availableQuantity",
+    },
+    {
+      title: "Actions",
+      dataIndex: "Actions",
+      key: "Actions",
+      render: (_: any, record: any) => (
+        <FaRegEdit
+          color="blue"
+          size={20}
+          style={{ cursor: "pointer" }}
+          onClick={() => handleEditItem(record)}
+        />
+      ),
     },
   ];
 
@@ -133,6 +151,14 @@ const ItemsPage: React.FC<Customer> = ({
     }, 2000);
   }, []);
 
+  const emptyFormValues = {
+    itemName: "",
+    itemPrice: undefined,
+    itemType: undefined,
+    oilMileage: undefined,
+    availableQuantity: undefined,
+  };
+
   const AddItems = async (data: FormValues) => {
     const formData = {
       name: data.itemName,
@@ -144,31 +170,65 @@ const ItemsPage: React.FC<Customer> = ({
 
     try {
       setLoader(true);
-      const res: any = await AddItem(formData);
-      if (res?.code === 200) {
-        message.success("Item added successfully!");
-        await getItems({
-          pageNumber: currentPage,
-          pageSizes: pageSize,
-          search: searchTerm,
-        });
-        reset({
-          itemName: "",
-          itemPrice: undefined,
-          itemType: undefined,
-          oilMileage: undefined,
-          availableQuantity: undefined,
-        });
-        setShowForm(false);
+
+      if (isEditing && currentItemId) {
+        const res: any = await updateItem({ id: currentItemId, ...formData });
+        if (res?.code === 200) {
+          message.success("Item updated successfully!");
+          await getItems({
+            pageNumber: currentPage,
+            pageSizes: pageSize,
+            search: searchTerm,
+          });
+          reset(emptyFormValues);
+          setIsEditing(false);
+          setCurrentItemId(null);
+        } else {
+          message.error(res?.message || "Failed to update item");
+        }
       } else {
-        message.error(res?.message || "Failed to add item");
+        const res: any = await AddItem(formData);
+        if (res?.code === 200) {
+          message.success("Item added successfully!");
+          await getItems({
+            pageNumber: currentPage,
+            pageSizes: pageSize,
+            search: searchTerm,
+          });
+          reset(emptyFormValues);
+          setShowForm(false);
+        } else {
+          message.error(res?.message || "Failed to add item");
+        }
       }
     } catch (error) {
-      console.error("Error adding item:", error);
-      message.error("Failed to add item. Please try again.");
+      console.error(`Error ${isEditing ? "updating" : "adding"} item:`, error);
+      message.error(`Failed to ${isEditing ? "update" : "add"} item. Please try again.`);
     } finally {
       setLoader(false);
     }
+  };
+
+  const handleEditItem = (record: any) => {
+    setCurrentItemId(record.id);
+    setIsEditing(true);
+    reset({
+      itemName: record.displayText,
+      itemPrice: record.price,
+      itemType: record.itemTypeId,
+      oilMileage: record.oilMileage,
+      availableQuantity: record.availableQuantity,
+    });
+    setCustomerOptions((prev) => {
+      if (prev.some((option) => option.value === record.itemTypeId)) return prev;
+      return [...prev, { value: record.itemTypeId, label: record.itemTypeName }];
+    });
+  };
+
+  const cancelEdit = () => {
+    setIsEditing(false);
+    setCurrentItemId(null);
+    reset(emptyFormValues);
   };
 
   useEffect(() => {
@@ -222,8 +282,11 @@ const ItemsPage: React.FC<Customer> = ({
         <div className="p-2">
           <div className="flex items-center justify-between">
             <p className="text-[24px] text-supporting_gray border-l border-[#000000] pl-4">
-              Add Item
+              {isEditing ? "Edit Item" : "Add Item"}
             </p>
+            {isEditing && (
+              <Button onClick={cancelEdit}>Cancel Edit</Button>
+            )}
           </div>
           <div className="flex items-center gap-x-4 mt-5 gap-x-4">
             <p className="text-[16px] font-bold text-supporting_gray w-32 flex-shrink-0">
@@ -307,7 +370,7 @@ const ItemsPage: React.FC<Customer> = ({
           className="flex items-center gap-4 bg-supporting_blue rounded-[10px] py-3 px-4 cursor-pointer my-3 float-right"
         >
           <img src={saveIcon} alt="save-Icon" />
-          <span className="text-[16px] text-white">Save</span>
+          <span className="text-[16px] text-white">{isEditing ? "Update" : "Save"}</span>
         </button>
       </form>
       <div className="mt-5">

@@ -60,22 +60,48 @@ export const getType = (): any => async (dispatch: Dispatch): Promise<any> =>{
 export const AddItem = (Pagination: any): any => async (dispatch: Dispatch): Promise<any> =>{
   try {
       dispatch({ type: GET_ITEM_START, loading: true });
-    
+
       const response = await fetch(`${API_BASE_URL}/api/Product/Add`, {
           method: "POST",
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify(Pagination) 
+          body: JSON.stringify(Pagination)
       });
       const res = await response.json();
       if (res.code === 200){
 
           dispatch({ type: GET_ITEM_DATA, payload: res, loading: false });
-          return { success: true, ...res }; 
+          return { success: true, ...res };
       } else {
           dispatch({ type: GET_ITEM_END, payload: res.message, loading: false });
-          return { success: false, ...res }; 
+          return { success: false, ...res };
+      }
+  } catch (error: any) {
+      dispatch({ type: GET_ITEM_END, payload: error.message, loading: false });
+      return { success: false, message: error.message };
+  }
+};
+
+export const updateItem = (formData: any): any => async (dispatch: Dispatch): Promise<any> =>{
+  try {
+      dispatch({ type: GET_ITEM_START, loading: true });
+
+      const response = await fetch(`${API_BASE_URL}/api/Product/Update`, {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+      });
+      const res = await response.json();
+      if (res.code === 200){
+
+          dispatch({ type: GET_ITEM_START, loading: false });
+          return { success: true, ...res };
+      } else {
+          dispatch({ type: GET_ITEM_END, payload: res.message, loading: false });
+          return { success: false, ...res };
       }
   } catch (error: any) {
       dispatch({ type: GET_ITEM_END, payload: error.message, loading: false });
