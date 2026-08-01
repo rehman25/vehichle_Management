@@ -207,36 +207,36 @@ const handleDeleteCustomer = async (id: string) => {
     try {
       if (isEditing && currentCustomerId) {
         const res: any = await updateCustomer(formDataUpdate);
-        
+
         if (res.code === 200) {
           message.success('Customer updated successfully!');
-          setTimeout(() => {
-            getCustomer({
-              pageNumber: currentPage,
-              pageSizes: pageSize,
-            });
-            reset();
-          }, 2000);
+          getCustomer({
+            pageNumber: currentPage,
+            pageSizes: pageSize,
+          });
+          reset();
+          setIsEditing(false);
+          setCurrentCustomerId(null);
+          setShowForm(false);
         } else {
           message.error(res.message);
         }
       } else {
 
          const formData = {
-      name: data.name,      
+      name: data.name,
       mobileNumber: data.mobileNumber,
     };
         // Add new customer
         const res: any = await AddCustomer(formData);
         if (res.code === 200) {
           message.success('Customer added successfully!');
-          setTimeout(() => {
-            getCustomer({
-              pageNumber: currentPage,
-              pageSizes: pageSize,
-            });
-            reset();
-          }, 2000);
+          getCustomer({
+            pageNumber: currentPage,
+            pageSizes: pageSize,
+          });
+          reset();
+          setShowForm(false);
         } else {
           message.error(res.message);
         }
