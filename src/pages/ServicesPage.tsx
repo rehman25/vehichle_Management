@@ -271,7 +271,8 @@ const ServicesPage: React.FC<Service> = ({
           amount: service.amount,
           discount: service.discount,
           paidAmount: service.paidAmount,
-          Payable: service.paidAmount,
+          // Payable is the bill total after discount — not what was paid.
+          Payable: (service.amount || 0) - (service.discount || 0),
           paymentTypeId: service.paymentType?.trim(),
           InstrumentNo: undefined,
           services: service.services.map((item: any) => ({
@@ -500,6 +501,7 @@ const ServicesPage: React.FC<Service> = ({
             <p class="head"><b>Asad & Awais Chamber Opposite CAA Club Near Star Gate Main Shahrah e Faisal, Karachi</b></p>
             <p class="head"><b>Shop Timing : 9:00am to 9:00pm, Sunday : 10:00am to 9:00pm, Friday: Off</p>
             <p class="head"><b>Contact : 0311-3311125 / 0302-2161979</b></p>
+            <p class="head"><b>www.onestaroil.com</b></p>
             <p class="head bold">Invoice No: ${data?.invoiceNo}</p>
           </div>
           
@@ -649,9 +651,25 @@ const ServicesPage: React.FC<Service> = ({
           };
 
           if (isEditing && currentServiceId) {
+            const editedServiceId = currentServiceId;
             const res: any = await updateSERVICES({ id: currentServiceId, ...formData });
             if (res.code === 200) {
               message.success("Service updated successfully!");
+              // Update returns no data, so re-fetch the invoice to reprint it.
+              Modal.confirm({
+                title: "Print Receipt",
+                content: "Bill updated. Print the corrected receipt now?",
+                okText: "Print",
+                cancelText: "Cancel",
+                onOk: async () => {
+                  const printData: any = await getPrint(editedServiceId);
+                  if (printData?.code === 200) {
+                    printReceipt(printData.data);
+                  } else {
+                    message.error("Could not load the updated bill for printing.");
+                  }
+                },
+              });
               getSERVICES({
                 pageNumber: currentPage,
                 pageSize: pageSize,
@@ -908,7 +926,7 @@ useEffect(() => {
           <div className="p-2">
             <div className="flex items-center justify-between">
               <p className="text-[24px] text-supporting_gray border-l border-[#000000] pl-4">
-                Add Service
+                {isEditing ? "Edit Bill" : "Add Service"}
               </p>
               <div className="flex items-center gap-4">
                 <button

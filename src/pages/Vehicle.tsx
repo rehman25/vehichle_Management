@@ -45,7 +45,6 @@ interface FormValues {
   vehicleNumber: string;
   lastReading: string;
   lastVisit: string;
-  area: string;
   sendSMS: boolean;
   model: string;
   capturedImages: {
@@ -59,7 +58,6 @@ interface FormDataTypes {
   vehicleNumber: string;
   lastReading: string;
   lastVisit: string;
-  area: string;
   sendSMS: boolean;
   capturedImages: {
     file: File;
@@ -73,7 +71,6 @@ const validationSchema = yup.object().shape({
   lastReading: yup.string().required("Reading is required"),
   lastVisit: yup.string().required("Last Visit is required"),
   model: yup.string().required("Model is required"),
-  area: yup.string().required("area is required"),
   sendSMS: yup.boolean().required("Send SMS is required"),
   capturedImages: yup
     .array()
@@ -126,7 +123,6 @@ const VehiclePage: React.FC<Vehicle> = ({
     vehicleNumber: "",
     lastReading: "",
     lastVisit: "",
-    area: "",
     sendSMS: false,
     capturedImages: [],
   });
@@ -146,7 +142,6 @@ const VehiclePage: React.FC<Vehicle> = ({
       lastReading: "",
       lastVisit: "",
       model: "",
-      area: "",
       sendSMS: false,
       capturedImages: [],
     },
@@ -280,7 +275,6 @@ const VehiclePage: React.FC<Vehicle> = ({
           ];
         }
         setValue("capturedImages", images);
-        setValue("area", data.area);
         setCurrentCustomerId(id);
         setIsEditing(true);
         setShowForm(true);
@@ -419,7 +413,6 @@ const VehiclePage: React.FC<Vehicle> = ({
     dataForm.append("LastReading", data.lastReading);
     dataForm.append("LastVisit", data.lastVisit);
     dataForm.append("Model", data.model);
-    dataForm.append("Area", data.area.toString());
     dataForm.append("SendSMS", data.sendSMS.toString());
     
     // Append images
@@ -607,21 +600,6 @@ const VehiclePage: React.FC<Vehicle> = ({
               classError="text-red-500"
               name="model"
               type="model"
-              errors={errors}
-              control={control}
-            />
-          </div>
-          <div className="flex items-center gap-x-4 mt-5 w-100">
-            <p className="text-[16px] font-bold text-supporting_gray w-32 flex-shrink-0">
-              Area
-            </p>
-            <FormInput
-              Label=""
-              placeholder="Enter Your Area"
-              classInput="text-[16px] font-bold text-supporting_gray  w-100 flex-shrink-0 h-12"
-              classError="text-red-500"
-              name="area"
-              type="area"
               errors={errors}
               control={control}
             />
