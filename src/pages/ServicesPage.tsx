@@ -363,7 +363,9 @@ const ServicesPage: React.FC<Service> = ({
         <title>Receipt</title>
         <style>
           body { font-family: Arial, sans-serif; padding: 20px; }
-          .header { text-align: center; margin-bottom: 20px; }
+          .header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+          .header-logo { height: 100px; width: auto; flex-shrink: 0; }
+          .header-text { flex: 1; text-align: center; }
           .section { margin-bottom: 15px; }
           .section2 { margin-bottom: 15px; display:flex; justify-content:space-between; }
           .printName{
@@ -434,35 +436,43 @@ const ServicesPage: React.FC<Service> = ({
               margin: 0;
               padding: 0;
             }
-            /* One A5 page tall at minimum, so on a short bill the footer sits at
-               the bottom of the page; a long bill grows onto more pages and the
-               footer follows the last item instead of overlapping the table. */
             #receipt-container {
               visibility: visible;
               margin: 0;
               padding: 0 2mm;
-              min-height: 196mm;
-              display: flex;
-              flex-direction: column;
+            }
+            /* Page height minus the footer, so on a short bill the footer sits at
+               the bottom of the page; a long bill grows onto more pages and the
+               footer follows the last item instead of overlapping the table. */
+            .bill-body {
+              min-height: 166mm;
             }
             .bill-footer {
-              margin-top: auto;
               break-inside: avoid;
               page-break-inside: avoid;
             }
             thead { display: table-header-group; }
             tr, .total-section { break-inside: avoid; page-break-inside: avoid; }
+            tr.page-break { break-before: page; page-break-before: always; }
+            th, td { padding: 4px 8px; }
             .notice {
               font-size: 8px;
+              margin: 2mm 0 0;
             }
             .thanknote-container {
-              padding: 5mm 0 0;
+              padding: 3mm 0 0;
             }
             .thanknote {
               background: none;
               border-left: none;
               box-shadow: none;
-              padding: 10px;
+              padding: 4px 10px;
+              margin: 0;
+              font-size: 11px;
+            }
+            .thanknote strong {
+              font-size: 13px;
+              margin-bottom: 2px;
             }
           }
           .head {
@@ -493,15 +503,18 @@ const ServicesPage: React.FC<Service> = ({
       </head>
       <body>
         <div id="receipt-container">
+          <div class="bill-body">
           <div class="header">
-            <img src=${logo2} alt="Company Logo" style="height: 90px; width: auto; margin-bottom: 10px;" />
-            <h1 class="head2">Burfat & Co.</h1>
-            <h1 class="head2">One Star Oil Change & Autotech Workshop</h1>
-            <p class="head"><b>Asad & Awais Chamber Opposite CAA Club Near Star Gate Main Shahrah e Faisal, Karachi</b></p>
-            <p class="head"><b>Shop Timing : 9:00am to 9:00pm, Sunday : 10:00am to 9:00pm, Friday: Off</p>
-            <p class="head"><b>Contact : 0311-3311125 / 0302-2161979</b></p>
-            <p class="website"><b>www.onestaroil.com</b></p>
-            <p class="head bold">Invoice No: ${data?.invoiceNo}</p>
+            <img src=${logo2} alt="Company Logo" class="header-logo" />
+            <div class="header-text">
+              <h1 class="head2">Burfat & Co.</h1>
+              <h1 class="head2">One Star Oil Change & Autotech Workshop</h1>
+              <p class="head"><b>Asad & Awais Chamber Opposite CAA Club Near Star Gate Main Shahrah e Faisal, Karachi</b></p>
+              <p class="head"><b>Shop Timing : 9:00am to 9:00pm, Sunday : 10:00am to 9:00pm, Friday: Off</p>
+              <p class="head"><b>Contact : 0311-3311125 / 0302-2161979</b></p>
+              <p class="website"><b>www.onestaroil.com</b></p>
+              <p class="head bold">Invoice No: ${data?.invoiceNo}</p>
+            </div>
           </div>
           
           <div class="section">
@@ -544,8 +557,9 @@ const ServicesPage: React.FC<Service> = ({
         ? total.toString()
         : total.toFixed(2);
 
+      // At most 10 items per printed page; the 11th, 21st, ... start a new page
       return `
-        <tr>
+        <tr${index > 0 && index % 10 === 0 ? ' class="page-break"' : ""}>
           <td>${index + 1}</td>
           <td>${service?.productName}</td>
           <td>${service?.productType}</td>
@@ -586,7 +600,8 @@ const ServicesPage: React.FC<Service> = ({
               )}</p>
             </div>
           </div>
-          
+          </div>
+
           <div class="bill-footer">
             <div class="thanknote-container">
               <div class="thanknote">
