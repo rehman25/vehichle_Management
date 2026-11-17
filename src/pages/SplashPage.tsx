@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import logo from "../assets/images/logo.svg";
+import logo from "../assets/images/onestar-logo.png";
 import RightSplashBackground from "../assets/images/right-splash.svg";
 import leftSplashBackground from "../assets/images/left-splash.svg";
 
@@ -13,7 +13,7 @@ const SplashPage = () => {
         className="absolute top-0 right-0"
       />
       <div className="min-h-screen w-full flex flex-col justify-center items-center">
-        <img src={logo} alt="app-logo" />
+        <img className="w-[300px] h-auto" src={logo} alt="app-logo" />
         <div className="mt-12">
           <button
             onClick={() => navigate("/sign-in")}

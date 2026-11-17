@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import logo from "../../assets/images/login-logo.svg";
+import logo from "../../assets/images/onestar-logo.png";
 import signUpBg from "../../assets/images/Sign-Up.jpg";
 
 const SIgnUpPage = () => {
@@ -16,7 +16,7 @@ const SIgnUpPage = () => {
           <h1 className="text-[36px] text-secondary font-givonic-bold">
             Welcome to
           </h1>
-          <img src={logo} alt="signup-logo" />
+          <img className="h-[140px] w-auto" src={logo} alt="signup-logo" />
           <div className="space-y-4">
             <p className="font-givonic-regular text-[#ffffff] text-[20px] w-[80%]">
               Sign up for One Star Oil Lube Shop and Oil Change today! Become a

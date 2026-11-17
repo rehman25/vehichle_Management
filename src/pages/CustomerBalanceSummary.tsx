@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput, FormSelect } from "../components/basic";
-import logo2 from "../assets/images/sidebar-logo.svg";
+import logo2 from "../assets/images/onestar-logo.png";
 import customerledger_Red from "../store/reducer/customerledger";
 
 interface Service {
@@ -97,7 +97,7 @@ const CustomerBalanceSummary : React.FC<Service> = ({
         <body>
           <div id="receipt-container">
             <div class="header">
-              <img src=${logo2} alt="Company Logo" style="max-width: 150px; margin-bottom: 10px;" />
+              <img src=${logo2} alt="Company Logo" style="height: 90px; width: auto; margin-bottom: 10px;" />
               <h2>Customer Balance Summary</h2>
             </div>
             

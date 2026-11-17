@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import loginLogo from "../../assets/images/login-logo.svg";
+import loginLogo from "../../assets/images/onestar-logo.png";
 import loginBg from "../../assets/images/Sign-In.jpg";
 
 const LoginPage = () => {
@@ -16,7 +16,7 @@ const LoginPage = () => {
           <h1 className="text-[36px] text-secondary font-givonic-bold">
             Glad You're Here
           </h1>
-          <img src={loginLogo} alt="loginLogo" />
+          <img className="h-[140px] w-auto" src={loginLogo} alt="loginLogo" />
           <p className="text-[#ffffff] text-[20px] font-givonic-regular mt-3">
             Welcome to One Star Oil Lube Shop and Oil Change! Sign in to
             experience top-notch automotive care. Our expert team ensures quick,

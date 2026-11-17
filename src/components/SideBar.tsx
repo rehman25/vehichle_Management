@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../assets/images/sidebar-logo.svg";
+import logo from "../assets/images/onestar-logo.png";
 import closeIcon from "../assets/images/close-icon.svg";
 import dashboardSvg from "../assets/images/dashboard-icon.svg";
 import servicesSvg from "../assets/images/services-logo.svg";
@@ -102,7 +102,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
     >
       <div className="flex items-center justify-between px-6">
         <div onClick={() => navigate("/dashboard")} className="cursor-pointer">
-          <img className="" src={logo} alt="app-logo" />
+          <img className="h-[72px] w-auto" src={logo} alt="app-logo" />
         </div>
         <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
           <img src={closeIcon} alt="closeIcon" />
