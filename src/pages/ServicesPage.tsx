@@ -363,7 +363,7 @@ const ServicesPage: React.FC<Service> = ({
         <title>Receipt</title>
         <style>
           body { font-family: Arial, sans-serif; padding: 20px; }
-          .header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+          .header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
           .header-logo { height: 100px; width: auto; flex-shrink: 0; }
           .header-text { flex: 1; text-align: center; }
           .section { margin-bottom: 15px; }
@@ -426,8 +426,9 @@ const ServicesPage: React.FC<Service> = ({
           
           @media print {
             img { visibility: visible !important; }
+            /* No fixed size: the bill fills whatever paper the printer uses
+               (A4 at the shop) instead of printing a small A5 page in the middle. */
             @page {
-              size: A5;
               margin: 6mm 4mm;
             }
             .bold { font-size: 10px; font-weight:bold; margin:5px; }
@@ -441,11 +442,12 @@ const ServicesPage: React.FC<Service> = ({
               margin: 0;
               padding: 0 2mm;
             }
-            /* Page height minus the footer, so on a short bill the footer sits at
-               the bottom of the page; a long bill grows onto more pages and the
-               footer follows the last item instead of overlapping the table. */
+            /* Page height (100vh is the printable page height when printing) minus
+               the footer, so on a short bill the footer sits at the bottom of the
+               page; a long bill grows onto more pages and the footer follows the
+               last item instead of overlapping the table. */
             .bill-body {
-              min-height: 166mm;
+              min-height: calc(100vh - 32mm);
             }
             .bill-footer {
               break-inside: avoid;
