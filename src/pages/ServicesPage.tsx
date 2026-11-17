@@ -376,19 +376,14 @@ const ServicesPage: React.FC<Service> = ({
           table { width: 100%; border-collapse: collapse; margin-top: 10px; position: relative; }
           th, td { border: 1px solid #ddd; padding: 8px; text-align: left; font-size:12px; }
           .quantity-total {
-            position: absolute;
-            left: calc(50% - 30px);
-            bottom: -20px;
+            text-align: center;
+            margin-top: 8px;
             font-size: 10px;
             font-weight: bold;
           }
-          
+
           /* Enhanced Thank You Note Styles */
           .thanknote-container {
-            position: absolute;
-            bottom: 80px;
-            left: 0;
-            right: 0;
             text-align: center;
             padding: 15px 0;
           }
@@ -431,40 +426,43 @@ const ServicesPage: React.FC<Service> = ({
             img { visibility: visible !important; }
             @page {
               size: A5;
-              margin: 0;
+              margin: 6mm 4mm;
             }
             .bold { font-size: 10px; font-weight:bold; margin:5px; }
             body {
               visibility: hidden;
-              width: 148mm;
-              min-height: 210mm;
+              margin: 0;
+              padding: 0;
             }
+            /* One A5 page tall at minimum, so on a short bill the footer sits at
+               the bottom of the page; a long bill grows onto more pages and the
+               footer follows the last item instead of overlapping the table. */
             #receipt-container {
               visibility: visible;
               margin: 0;
-              padding: 2mm;
+              padding: 0 2mm;
+              min-height: 196mm;
+              display: flex;
+              flex-direction: column;
             }
+            .bill-footer {
+              margin-top: auto;
+              break-inside: avoid;
+              page-break-inside: avoid;
+            }
+            thead { display: table-header-group; }
+            tr, .total-section { break-inside: avoid; page-break-inside: avoid; }
             .notice {
-              position: fixed;
-              bottom: 5mm;
               font-size: 8px;
-              width: calc(148mm - 4mm);
             }
             .thanknote-container {
-              position: fixed;
-              bottom: 25mm;
+              padding: 5mm 0 0;
             }
             .thanknote {
               background: none;
               border-left: none;
               box-shadow: none;
               padding: 10px;
-            }
-            .quantity-total {
-              left: calc(50% - 30px);
-              bottom: -50px;
-              font-size: 10px;
-              font-weight: bold;
             }
           }
           .head {
@@ -474,17 +472,18 @@ const ServicesPage: React.FC<Service> = ({
             font-size:16px;
             margin: 5px 0;
           }
+          .website {
+            font-size:14px;
+            margin: 6px 0;
+          }
           .notice {
-            position: absolute;
-            bottom: 30px;
             text-align: center;
             font-size: 10px;
-            width: calc(100% - 40px);
           }
           .total-section {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
+            margin-top: 15px;
           }
           .payment-info {
             text-align: right;
@@ -501,7 +500,7 @@ const ServicesPage: React.FC<Service> = ({
             <p class="head"><b>Asad & Awais Chamber Opposite CAA Club Near Star Gate Main Shahrah e Faisal, Karachi</b></p>
             <p class="head"><b>Shop Timing : 9:00am to 9:00pm, Sunday : 10:00am to 9:00pm, Friday: Off</p>
             <p class="head"><b>Contact : 0311-3311125 / 0302-2161979</b></p>
-            <p class="head"><b>www.onestaroil.com</b></p>
+            <p class="website"><b>www.onestaroil.com</b></p>
             <p class="head bold">Invoice No: ${data?.invoiceNo}</p>
           </div>
           
@@ -522,7 +521,7 @@ const ServicesPage: React.FC<Service> = ({
             </div>
           </div>
           
-          <div class="section" style="position: relative;">
+          <div class="section">
             <table>
               <thead>
                 <tr>
@@ -588,16 +587,18 @@ const ServicesPage: React.FC<Service> = ({
             </div>
           </div>
           
-          <div class="thanknote-container">
-            <div class="thanknote">
-              <strong>Thank You For Your Business!</strong>
-              We truly appreciate your trust in our services.<br>
-              Your satisfaction is our top priority.<br>
-              Looking forward to serve you again soon!
+          <div class="bill-footer">
+            <div class="thanknote-container">
+              <div class="thanknote">
+                <strong>Thank You For Your Business!</strong>
+                We truly appreciate your trust in our services.<br>
+                Your satisfaction is our top priority.<br>
+                Looking forward to serve you again soon!
+              </div>
             </div>
+
+            <p class="notice">All Prices are subject to change without prior notices at the time of delivery will be charged in case of Return Bring this bill Please Check the Qty & Leakage, company will not be responsible after the service.</p>
           </div>
-          
-          <p class="notice">All Prices are subject to change without prior notices at the time of delivery will be charged in case of Return Bring this bill Please Check the Qty & Leakage, company will not be responsible after the service.</p>
         </div>
       </body>
     </html>

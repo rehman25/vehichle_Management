@@ -100,11 +100,11 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen, setIsOpen }) => {
         isOpen ? "w-[20%]" : "w-0"
       } overflow-y-auto`}
     >
-      <div className="flex items-center justify-between px-6">
+      <div className="relative flex justify-center px-6 pt-5">
         <div onClick={() => navigate("/dashboard")} className="cursor-pointer">
-          <img className="h-[72px] w-auto" src={logo} alt="app-logo" />
+          <img className="h-[130px] w-auto" src={logo} alt="app-logo" />
         </div>
-        <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
+        <div onClick={() => setIsOpen(!isOpen)} className="absolute top-5 right-5 cursor-pointer">
           <img src={closeIcon} alt="closeIcon" />
         </div>
       </div>
